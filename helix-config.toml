@@ -1,0 +1,15 @@
+theme = "autumn"
+
+[editor]
+line-number = "relative"
+
+[keys.normal]
+C-w = ":w"
+C-x = ":x"
+"^" = "goto_line_start"
+"$" = "goto_line_end"
+
+[keys.insert]
+C-w = ":w"
+C-x = ":x"
+

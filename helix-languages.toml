@@ -1,0 +1,10 @@
+[[language]]
+name = "python"
+
+[[language]]
+name = "rust"
+
+[language-server.rust-analyzer.config]
+linkedProjects = [ { crates = [ { root_module = "solution.rs", edition = "2021", "deps" = [] } ] } ]
+diagnostics.disabled = [ "unlinked-file" ]
+
