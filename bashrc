@@ -11,10 +11,21 @@ set -o vi
 export EDITOR=hx
 
 alias sd="cd ~ && cd \$(find * -type d | fzf)"
-alias hxs="ls | grep solution | xargs hx"
 
 function pdf() {
   pdftotext -enc ASCII7 -layout -nopgbrk $1 - | less
+}
+
+alias cpy="touch solution.py"
+alias crs="cargo new solution --bin --vcs none"
+function hxs() {
+  if [ -f solution/src/main.rs ]; then
+    hx solution/src/main.rs
+  elif [ -f solution.py ]; then
+    hx solution.py
+  else
+    echo -ne "no solution found\n"
+  fi
 }
 
 function fw() {
@@ -72,16 +83,12 @@ function sio() {
 
 function rn() {(
   sio $1
-  if [ -f solution.rs ]; then
-    echo -ne "executing solution.rs\n"
-    if rustfmt solution.rs &> $sout; then
-      if rustc solution.rs -o /tmp/rs &>> $sout; then
-        /tmp/rs < $sin &>> $sout &
-      fi
+  if [ -f solution/src/main.rs ]; then
+    if cargo build --release --manifest-path solution/Cargo.toml; then
+      solution/target/release/solution < $sin &> $sout &
     fi
   elif [ -f solution.py ]; then
-    echo -ne "executing solution.py\n"
-    python3 solution.py < $sin &>> $sout &
+    python3 solution.py < $sin &> $sout &
   else
     echo -ne "no solution found\n"
     exit 0
