@@ -16,13 +16,10 @@ function pdf() {
   pdftotext -enc ASCII7 -layout -nopgbrk $1 - | less
 }
 
-alias cpy="touch solution.py"
 alias crs="cargo new solution --bin --vcs none"
 function hxs() {
   if [ -f solution/src/main.rs ]; then
     hx solution/src/main.rs
-  elif [ -f solution.py ]; then
-    hx solution.py
   else
     echo -ne "no solution found\n"
   fi
@@ -84,11 +81,11 @@ function sio() {
 function rn() {(
   sio $1
   if [ -f solution/src/main.rs ]; then
-    if cargo build --release --manifest-path solution/Cargo.toml; then
-      solution/target/release/solution < $sin &> $sout &
+    cargo build --release --manifest-path solution/Cargo.toml
+    if [ $? -eq 101 ]; then
+      exit 0
     fi
-  elif [ -f solution.py ]; then
-    python3 solution.py < $sin &> $sout &
+    solution/target/release/solution < $sin &> $sout &
   else
     echo -ne "no solution found\n"
     exit 0
