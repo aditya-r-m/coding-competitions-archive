@@ -11,5 +11,5 @@ C-x = ":x"
 
 [keys.insert]
 C-w = ":w"
-C-x = ":x"
+C-x = "normal_mode"
 
