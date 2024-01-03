@@ -16,10 +16,18 @@ function pdf() {
   pdftotext -enc ASCII7 -layout -nopgbrk $1 - | less
 }
 
-alias crs="cargo new solution --bin --vcs none"
+function crs() {
+  spath=$(python3 -c 'print("/".join("'$(pwd)'".split("/")[3:]))')
+  sname=$(python3 -c 'print("'$(pwd)'".split("/")[-1])')
+  if [ ! -f solution.rs ]; then
+    touch solution.rs
+    printf "\n[[bin]]\n name = \""$sname"\"\n path=\""$spath"/solution.rs\"\n" >> /root/coding-competitions-archive/Cargo.toml
+  fi
+}
+
 function hxs() {
-  if [ -f solution/src/main.rs ]; then
-    hx solution/src/main.rs
+  if [ -f solution.rs ]; then
+    hx solution.rs
   else
     echo -ne "no solution found\n"
   fi
@@ -79,17 +87,14 @@ function sio() {
 }
 
 function rn() {(
+  crs
   sio $1
-  if [ -f solution/src/main.rs ]; then
-    cargo build --release --manifest-path solution/Cargo.toml
-    if [ $? -eq 101 ]; then
-      exit 0
-    fi
-    solution/target/release/solution < $sin &> $sout &
-  else
-    echo -ne "no solution found\n"
+  cargo build --color always --release --bin $sname 2> $sout
+  if [ $? -eq 101 ]; then
+    less -R $sout
     exit 0
   fi
+  /root/coding-competitions-archive/target/release/$sname < $sin &> $sout &
   fw
   less $sout
 )}

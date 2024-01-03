@@ -1,0 +1,20 @@
+[package]
+name = "solutions"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "lib"
+path = "lib.rs"
+
+[[bin]]
+name = "king"
+path = "codejam/2008/amer_semifinal/king/solution.rs"
+
+[[bin]]
+name = "portal"
+path = "codejam/2008/round_3/portal/solution.rs"
+
+[[bin]]
+ name = "fly_swatter"
+ path="codejam/2008/qualification_round/fly_swatter/solution.rs"

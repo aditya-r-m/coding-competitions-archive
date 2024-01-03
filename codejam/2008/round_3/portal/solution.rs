@@ -1,7 +1,59 @@
 use std::collections::HashSet;
-use std::io::stdin;
+
+lib::run!();
 
 type Point = (usize, usize);
+struct TestCase {
+    grid: Vec<Vec<bool>>,
+    source: Point,
+    target: Point,
+}
+
+fn read() -> TestCase {
+    let mut grid: Vec<Vec<bool>> = Vec::new();
+    let mut source: Point = (0, 0);
+    let mut target: Point = (0, 0);
+
+    lib::input!(row_col_counts as Vec<usize>);
+    let row_count = row_col_counts[0];
+    for r in 1..1 + row_count {
+        lib::input!(buffer);
+        let mut row = buffer.chars().collect::<Vec<char>>();
+
+        row.push('#');
+        row.insert(0, '#');
+        grid.push(row.iter().map(|&c| c != '#').collect::<Vec<bool>>());
+        for (c, &ch) in row.iter().enumerate() {
+            if ch == 'O' {
+                source = (r, c);
+            } else if ch == 'X' {
+                target = (r, c);
+            }
+        }
+    }
+    grid.push(vec![false; grid[0].len()]);
+    grid.insert(0, vec![false; grid[0].len()]);
+
+    TestCase {
+        grid,
+        source,
+        target,
+    }
+}
+
+fn solve(
+    TestCase {
+        grid,
+        source,
+        target,
+    }: TestCase,
+) -> String {
+    if let Some(shorted_path) = bfs(source, target, grid) {
+        format!("{shorted_path}")
+    } else {
+        "THE CAKE IS A LIE".to_string()
+    }
+}
 
 fn bfs(source: Point, target: Point, grid: Vec<Vec<bool>>) -> Option<usize> {
     let mut distance = 0usize;
@@ -63,48 +115,4 @@ fn bfs(source: Point, target: Point, grid: Vec<Vec<bool>>) -> Option<usize> {
     }
 
     None
-}
-
-fn main() {
-    let mut buffer = String::new();
-    stdin().read_line(&mut buffer).unwrap();
-    let test_case_count = buffer.trim().parse::<usize>().unwrap();
-    buffer.clear();
-
-    for test_case_index in 1..1 + test_case_count {
-        stdin().read_line(&mut buffer).unwrap();
-        let row_count = buffer.split(" ").next().unwrap().parse::<usize>().unwrap();
-        buffer.clear();
-
-        let mut grid: Vec<Vec<bool>> = Vec::new();
-        let mut source: Point = (0, 0);
-        let mut target: Point = (0, 0);
-
-        for r in 1..1 + row_count {
-            stdin().read_line(&mut buffer).unwrap();
-            let mut row = buffer.trim().chars().collect::<Vec<char>>();
-            buffer.clear();
-
-            row.push('#');
-            row.insert(0, '#');
-            grid.push(row.iter().map(|&c| c != '#').collect::<Vec<bool>>());
-            for c in 0..row.len() {
-                if row[c] == 'O' {
-                    source = (r, c);
-                } else if row[c] == 'X' {
-                    target = (r, c);
-                }
-            }
-        }
-        grid.push(vec![false; grid[0].len()]);
-        grid.insert(0, vec![false; grid[0].len()]);
-        println!(
-            "Case #{test_case_index}: {}",
-            if let Some(shorted_path) = bfs(source, target, grid) {
-                format!("{shorted_path}")
-            } else {
-                "THE CAKE IS A LIE".to_string()
-            }
-        );
-    }
 }

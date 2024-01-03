@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "codejam_rs_lib"
+name = "solutions"
 version = "0.1.0"

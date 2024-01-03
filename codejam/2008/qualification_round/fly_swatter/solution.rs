@@ -1,7 +1,24 @@
-use std::convert::TryInto;
-use std::io::stdin;
+lib::run!();
 
-fn solve(f: f64, mut l: f64, mut t: f64, mut r: f64, mut g: f64) -> f64 {
+struct TestCase {
+    f: f64,
+    l: f64,
+    t: f64,
+    r: f64,
+    g: f64,
+}
+
+fn read() -> TestCase {
+    lib::input!(buffer as [f64; 5]);
+    let [f, l, t, r, g] = buffer;
+    TestCase { f, l, t, r, g }
+}
+
+fn solve(TestCase { f, l, t, r, g }: TestCase) -> String {
+    format!("{:.6}", fly_swatting_probability(f, l, t, r, g))
+}
+
+fn fly_swatting_probability(f: f64, mut l: f64, mut t: f64, mut r: f64, mut g: f64) -> f64 {
     let total_area = std::f64::consts::PI * l * l / 4_f64;
     t += f;
     l -= t;
@@ -61,22 +78,5 @@ fn solve(f: f64, mut l: f64, mut t: f64, mut r: f64, mut g: f64) -> f64 {
         }
         (clipping_squares, clipping_squares_next) = (clipping_squares_next, clipping_squares);
         clipping_squares_next.clear();
-    }
-}
-
-fn main() {
-    let mut buffer = String::new();
-    stdin().read_line(&mut buffer).unwrap();
-    let test_cases: usize = buffer.trim().parse::<usize>().unwrap();
-    for test_case in 1..1 + test_cases {
-        buffer.clear();
-        stdin().read_line(&mut buffer).unwrap();
-        let [f, l, t, r, g]: [f64; 5] = buffer
-            .split(" ")
-            .map(|s| s.trim().parse::<f64>().unwrap())
-            .collect::<Vec<f64>>()
-            .try_into()
-            .unwrap();
-        println!("Case #{test_case}: {:.6}", solve(f, l, t, r, g));
     }
 }
