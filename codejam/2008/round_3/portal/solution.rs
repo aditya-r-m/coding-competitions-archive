@@ -14,8 +14,7 @@ fn read() -> TestCase {
     let mut source: Point = (0, 0);
     let mut target: Point = (0, 0);
 
-    lib::input!(row_col_counts as Vec<usize>);
-    let row_count = row_col_counts[0];
+    lib::input!([usize; 2] as [row_count, _]);
     for r in 1..1 + row_count {
         lib::input!(buffer);
         let mut row = buffer.chars().collect::<Vec<char>>();

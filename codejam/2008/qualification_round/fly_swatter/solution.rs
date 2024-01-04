@@ -9,8 +9,7 @@ struct TestCase {
 }
 
 fn read() -> TestCase {
-    lib::input!(buffer as [f64; 5]);
-    let [f, l, t, r, g] = buffer;
+    lib::input!([f64; 5] as [f, l, t, r, g]);
     TestCase { f, l, t, r, g }
 }
 

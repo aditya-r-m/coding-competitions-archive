@@ -1,29 +1,30 @@
-// derived from https://stackoverflow.com/a/57200055/5664000
+// ref: https://stackoverflow.com/a/57200055/5664000
+
 #[macro_export]
 macro_rules! input {
-    ($out:ident as Vec<$type:ty>) => {
-        let mut inner = String::new();
-        std::io::stdin().read_line(&mut inner).unwrap();
-        let $out = inner
+    ($out:ident) => {
+        let mut buffer = String::new();
+        std::io::stdin().read_line(&mut buffer).expect("A String");
+        let $out = buffer.trim();
+    };
+    (Vec<$type:ty> as $out:ident) => {
+        lib::input!(buffer);
+        let $out = buffer
             .split_whitespace()
             .map(|s| s.parse::<$type>().unwrap())
             .collect::<Vec<$type>>();
     };
-    ($out:ident as [$type:ty; $x:expr]) => {
-        lib::input!(vec as Vec<$type>);
-        let mut $out: [$type; $x] = [<$type>::default(); $x];
+    ($type:ty as $out:ident) => {
+        lib::input!(buffer);
+        let $out = buffer.parse::<$type>().expect("Parsable");
+    };
+    ([$type:ty; $x:expr] as $out:pat_param) => {
+        lib::input!(Vec<$type> as vector);
+        let mut buffer: [$type; $x] = [<$type>::default(); $x];
         for i in 0..$x {
-            $out[i] = vec[i];
+            buffer[i] = vector[i];
         }
-    };
-    ($out:ident) => {
-        let mut inner = String::new();
-        std::io::stdin().read_line(&mut inner).expect("A String");
-        let $out = inner.trim();
-    };
-    ($out:ident as $type:ty) => {
-        lib::input!(inner);
-        let $out = inner.parse::<$type>().expect("Parsable");
+        let $out = buffer;
     };
 }
 
@@ -31,7 +32,7 @@ macro_rules! input {
 macro_rules! run {
     () => {
         fn main() {
-            lib::input!(test_case_count as usize);
+            lib::input!(usize as test_case_count);
             for test_case_index in 1..1 + test_case_count {
                 println!("Case #{test_case_index}: {}", solve(read()));
             }

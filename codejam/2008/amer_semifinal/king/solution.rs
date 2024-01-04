@@ -6,8 +6,7 @@ struct TestCase {
 }
 
 fn read() -> TestCase {
-    lib::input!(row_col_counts as Vec<usize>);
-    let row_count = row_col_counts[0];
+    lib::input!([usize; 2] as [row_count, _]);
     let mut grid: Vec<Vec<bool>> = Vec::new();
     let mut source: (usize, usize) = (0, 0);
     for r in 0..row_count {
