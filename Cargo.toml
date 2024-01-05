@@ -18,3 +18,8 @@ path = "codejam/2008/round_3/portal/solution.rs"
 [[bin]]
  name = "fly_swatter"
  path="codejam/2008/qualification_round/fly_swatter/solution.rs"
+
+[[bin]]
+ name = "milkshakes"
+ path="codejam/2008/round_1a/milkshakes/solution.rs"
+

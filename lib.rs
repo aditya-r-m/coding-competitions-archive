@@ -11,7 +11,7 @@ macro_rules! input {
         lib::input!(buffer);
         let $out = buffer
             .split_whitespace()
-            .map(|s| s.parse::<$type>().unwrap())
+            .map(|s| s.parse::<$type>().expect("Parsable"))
             .collect::<Vec<$type>>();
     };
     ($type:ty as $out:ident) => {
