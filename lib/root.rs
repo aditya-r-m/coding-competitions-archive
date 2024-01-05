@@ -1,8 +1,9 @@
-// ref: https://stackoverflow.com/a/57200055/5664000
+pub mod algorithms;
+pub mod collections;
 
 #[macro_export]
 macro_rules! input {
-    ($out:ident) => {
+    ($out:ident) => { // ref: https://stackoverflow.com/a/57200055/5664000
         let mut buffer = String::new();
         std::io::stdin().read_line(&mut buffer).expect("A String");
         let $out = buffer.trim();
