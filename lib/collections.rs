@@ -31,3 +31,41 @@ impl DisjointSet {
         }
     }
 }
+
+pub struct BinaryIndexedTree {
+    values: Vec<usize>,
+    m: usize,
+}
+
+impl BinaryIndexedTree {
+    pub fn new(n: usize, m: usize) -> BinaryIndexedTree {
+        BinaryIndexedTree {
+            values: vec![0; n],
+            m,
+        }
+    }
+
+    pub fn add(&mut self, mut i: usize, v: usize) {
+        if i == 0 {
+            self.values[0] += v;
+            self.values[0] %= self.m;
+            return;
+        }
+        while i < self.values.len() {
+            self.values[i] += v;
+            self.values[0] %= self.m;
+            i += i & (!i + 1);
+        }
+    }
+
+    pub fn get(&self, mut i: usize) -> usize {
+        let mut result = self.values[0];
+
+        while i > 0 {
+            result += self.values[i];
+            result %= self.m;
+            i -= i & (!i + 1);
+        }
+        result
+    }
+}
