@@ -1,6 +1,19 @@
 use std::collections::HashSet;
 
-fn solve(k: usize, s: Vec<char>) -> usize {
+lib::run!();
+
+struct TestCase {
+    k: usize,
+    s: Vec<char>,
+}
+
+fn read() -> TestCase {
+    lib::input!(usize as k);
+    lib::input!(Vec<char> as s);
+    TestCase { k, s }
+}
+
+fn solve(TestCase { k, s }: TestCase) -> usize {
     let mut inner_cost: Vec<Vec<usize>> = vec![vec![0; k]; k];
     let mut outer_cost: Vec<Vec<usize>> = vec![vec![0; k]; k];
     for b in (0..s.len()).step_by(k) {
@@ -27,7 +40,7 @@ fn solve(k: usize, s: Vec<char>) -> usize {
             cache[cur_set][i][j] = inner_cost[i][j];
         }
     }
-    while cur_layer.len() > 0 {
+    while !cur_layer.is_empty() {
         for &cur_set in cur_layer.iter() {
             for e in 0..k {
                 let nxt_set = cur_set | (1 << e);
@@ -67,24 +80,4 @@ fn solve(k: usize, s: Vec<char>) -> usize {
     }
 
     sol
-}
-
-fn main() {
-    let mut buffer = String::new();
-
-    std::io::stdin().read_line(&mut buffer).unwrap();
-    let test_case_count = buffer.trim().parse::<usize>().unwrap();
-    buffer.clear();
-
-    for test_case_index in 1..1 + test_case_count {
-        std::io::stdin().read_line(&mut buffer).unwrap();
-        let k = buffer.trim().parse::<usize>().unwrap();
-        buffer.clear();
-
-        std::io::stdin().read_line(&mut buffer).unwrap();
-        let s = buffer.trim().chars().collect::<Vec<char>>();
-        buffer.clear();
-
-        println!("Case #{test_case_index}: {}", solve(k, s));
-    }
 }

@@ -31,3 +31,7 @@ path = "codejam/2008/round_3/portal/solution.rs"
 [[bin]]
  name = "increasing_speed_limits"
  path="codejam/2008/round_1c/increasing_speed_limits/solution.rs"
+
+[[bin]]
+ name = "permrle"
+ path="codejam/2008/round_2/permrle/solution.rs"

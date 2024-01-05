@@ -8,6 +8,10 @@ macro_rules! input {
         std::io::stdin().read_line(&mut buffer).expect("A String");
         let $out = buffer.trim();
     };
+    (Vec<char> as $out:ident) => {
+        lib::input!(buffer);
+        let $out = buffer.trim().chars().collect::<Vec<char>>();
+    };
     (Vec<$type:ty> as $out:ident) => {
         lib::input!(buffer);
         let $out = buffer
