@@ -2,14 +2,39 @@ use std::cmp::min;
 use std::collections::BTreeSet;
 use std::collections::HashMap;
 use std::collections::VecDeque;
-use std::io::stdin;
+
+lib::run!();
+
+fn read() -> Vec<Vec<char>> {
+    lib::input!([usize; 2] as [n, _]);
+    let mut grid: Vec<Vec<char>> = Vec::new();
+    for _ in 0..n {
+        lib::input!(Vec<char> as row);
+        grid.push(row);
+    }
+    grid
+}
+
+fn solve(grid: Vec<Vec<char>>) -> String {
+    format!(
+        "{}",
+        grid.iter()
+            .map(|row| {
+                row.iter()
+                    .map(|&c| if c == '.' { 1 } else { 0 })
+                    .sum::<usize>()
+            })
+            .sum::<usize>()
+            - maximum_flow(parse(grid))
+    )
+}
 
 fn parse(mut grid: Vec<Vec<char>>) -> Vec<BTreeSet<usize>> {
     let nr = grid.len();
     let nc = grid[0].len() + (grid[0].len() & 1);
     if nc != grid[0].len() {
-        for i in 0..nr {
-            grid[i].push('x');
+        for row in grid.iter_mut() {
+            row.push('x');
         }
     }
 
@@ -75,41 +100,4 @@ fn maximum_flow(mut graph: Vec<BTreeSet<usize>>) -> usize {
         }
     }
     graph[t].len()
-}
-
-fn main() {
-    let mut buffer = String::new();
-    stdin().read_line(&mut buffer).unwrap();
-    let test_case_count = buffer.trim().parse::<usize>().unwrap();
-    buffer.clear();
-
-    for test_case_index in 1..1 + test_case_count {
-        stdin().read_line(&mut buffer).unwrap();
-        let n = buffer
-            .split(" ")
-            .next()
-            .unwrap()
-            .trim()
-            .parse::<usize>()
-            .unwrap();
-        buffer.clear();
-
-        let mut grid: Vec<Vec<char>> = Vec::new();
-        for _ in 0..n {
-            stdin().read_line(&mut buffer).unwrap();
-            grid.push(buffer.trim().chars().collect::<Vec<char>>());
-            buffer.clear();
-        }
-
-        let solution = grid
-            .iter()
-            .map(|row| {
-                row.iter()
-                    .map(|&c| if c == '.' { 1 } else { 0 })
-                    .sum::<usize>()
-            })
-            .sum::<usize>()
-            - maximum_flow(parse(grid));
-        println!("Case #{test_case_index}: {solution}");
-    }
 }

@@ -12,26 +12,29 @@ name = "king"
 path = "codejam/2008/amer_semifinal/king/solution.rs"
 
 [[bin]]
+name = "fly_swatter"
+path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
+
+[[bin]]
+name = "milkshakes"
+path = "codejam/2008/round_1a/milkshakes/solution.rs"
+
+[[bin]]
+name = "number_sets"
+path = "codejam/2008/round_1b/number_sets/solution.rs"
+
+[[bin]]
+name = "increasing_speed_limits"
+path = "codejam/2008/round_1c/increasing_speed_limits/solution.rs"
+
+[[bin]]
+name = "permrle"
+path = "codejam/2008/round_2/permrle/solution.rs"
+
+[[bin]]
+name = "no_cheating"
+path = "codejam/2008/round_3/no_cheating/solution.rs"
+
+[[bin]]
 name = "portal"
 path = "codejam/2008/round_3/portal/solution.rs"
-
-[[bin]]
- name = "fly_swatter"
- path="codejam/2008/qualification_round/fly_swatter/solution.rs"
-
-[[bin]]
- name = "milkshakes"
- path="codejam/2008/round_1a/milkshakes/solution.rs"
-
-[[bin]]
- name = "number_sets"
- path="codejam/2008/round_1b/number_sets/solution.rs"
-
-
-[[bin]]
- name = "increasing_speed_limits"
- path="codejam/2008/round_1c/increasing_speed_limits/solution.rs"
-
-[[bin]]
- name = "permrle"
- path="codejam/2008/round_2/permrle/solution.rs"

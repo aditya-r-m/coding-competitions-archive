@@ -21,7 +21,16 @@ function crs() {
   sname=$(python3 -c 'print("'$(pwd)'".split("/")[-1])')
   if [ ! -f solution.rs ]; then
     touch solution.rs
-    printf "\n[[bin]]\n name = \""$sname"\"\n path=\""$spath"/solution.rs\"\n" >> /root/coding-competitions-archive/Cargo.toml
+    ctoml=/root/coding-competitions-archive/Cargo.toml
+    printf "\n[[bin]]\nname = \""$sname"\"\npath = \""$spath"/solution.rs\"\n" >> $ctoml
+    python3 -c '
+file = open("'$ctoml'", "r")
+ls = file.read().strip().split("\n\n")
+s = "\n\n".join(sorted(ls, key=lambda i: i.split("path")[-1].replace("[package]", "  ").replace("lib", "  ")))
+file.close()
+file = open("'$ctoml'", "w")
+file.write(s + "\n")
+file.close()'
   fi
 }
 
