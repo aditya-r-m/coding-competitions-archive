@@ -8,6 +8,10 @@ name = "lib"
 path = "lib/root.rs"
 
 [[bin]]
+name = "code_sequence"
+path = "codejam/2008/amer_semifinal/code_sequence/solution.rs"
+
+[[bin]]
 name = "king"
 path = "codejam/2008/amer_semifinal/king/solution.rs"
 
