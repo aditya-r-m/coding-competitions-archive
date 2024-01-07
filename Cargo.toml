@@ -16,6 +16,10 @@ name = "king"
 path = "codejam/2008/amer_semifinal/king/solution.rs"
 
 [[bin]]
+name = "mixing_bowls"
+path = "codejam/2008/amer_semifinal/mixing_bowls/solution.rs"
+
+[[bin]]
 name = "fly_swatter"
 path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
 
