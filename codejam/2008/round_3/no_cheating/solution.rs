@@ -1,7 +1,4 @@
-use std::cmp::min;
-use std::collections::BTreeSet;
 use std::collections::HashMap;
-use std::collections::VecDeque;
 
 lib::run!();
 
@@ -25,11 +22,14 @@ fn solve(grid: Vec<Vec<char>>) -> String {
                     .sum::<usize>()
             })
             .sum::<usize>()
-            - maximum_flow(parse(grid))
+            - {
+                let (graph, s, t) = parse(grid);
+                lib::algorithms::maximum_flow(&graph, s, t) as usize
+            }
     )
 }
 
-fn parse(mut grid: Vec<Vec<char>>) -> Vec<BTreeSet<usize>> {
+fn parse(mut grid: Vec<Vec<char>>) -> (Vec<HashMap<usize, i64>>, usize, usize) {
     let nr = grid.len();
     let nc = grid[0].len() + (grid[0].len() & 1);
     if nc != grid[0].len() {
@@ -38,66 +38,33 @@ fn parse(mut grid: Vec<Vec<char>>) -> Vec<BTreeSet<usize>> {
         }
     }
 
-    let mut graph: Vec<BTreeSet<usize>> = vec![BTreeSet::new(); nr * nc];
+    let mut graph: Vec<HashMap<usize, i64>> = vec![HashMap::new(); nr * nc];
     let norm = |i, j| i * nc + j;
     for i in 0..nr {
         for j in 1..nc {
             if grid[i][j] != '.' {
                 continue;
             }
-            for ni in if i > 0 { i - 1 } else { 0 }..min(i + 2, grid.len()) {
+            for ni in if i > 0 { i - 1 } else { 0 }..std::cmp::min(i + 2, grid.len()) {
                 if grid[ni][j - 1] == '.' {
-                    graph[norm(i, j)].insert(norm(ni, j - 1));
-                    graph[norm(ni, j - 1)].insert(norm(i, j));
+                    graph[norm(i, j)].insert(norm(ni, j - 1), 1);
+                    graph[norm(ni, j - 1)].insert(norm(i, j), 1);
                 }
             }
         }
     }
-    graph
-}
-
-fn maximum_flow(mut graph: Vec<BTreeSet<usize>>) -> usize {
     let n = graph.len();
     let s = graph.len();
-    graph.push(BTreeSet::new());
+    graph.push(HashMap::new());
     let t = graph.len();
-    graph.push(BTreeSet::new());
+    graph.push(HashMap::new());
     for u in 0..n {
         if u & 1 == 0 {
-            graph[s].insert(u);
+            graph[s].insert(u, 1);
         } else {
             graph[u].clear();
-            graph[u].insert(t);
+            graph[u].insert(t, 1);
         }
     }
-
-    let mut queue: VecDeque<usize> = VecDeque::new();
-    let mut path: HashMap<usize, usize> = HashMap::new();
-    let mut augmenting_path_found = true;
-    while augmenting_path_found {
-        augmenting_path_found = false;
-        queue.clear();
-        queue.push_back(s);
-        path.clear();
-        path.insert(s, s);
-
-        while let Some(mut u) = queue.pop_front() {
-            if u == t {
-                augmenting_path_found = true;
-                while u != s {
-                    graph[u].insert(path[&u]);
-                    graph[path[&u]].remove(&u);
-                    u = path[&u];
-                }
-                break;
-            }
-            for &v in graph[u].iter() {
-                if !path.contains_key(&v) {
-                    queue.push_back(v);
-                    path.insert(v, u);
-                }
-            }
-        }
-    }
-    graph[t].len()
+    (graph, s, t)
 }
