@@ -6,7 +6,7 @@ macro_rules! input {
     ($out:ident) => { // ref: https://stackoverflow.com/a/57200055/5664000
         let mut buffer = String::new();
         std::io::stdin().read_line(&mut buffer).expect("A String");
-        let $out = buffer.trim();
+        let $out = buffer.trim().to_string();
     };
     (Vec<char> as $out:ident) => {
         lib::input!(buffer);

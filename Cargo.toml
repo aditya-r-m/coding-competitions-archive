@@ -20,8 +20,20 @@ name = "mixing_bowls"
 path = "codejam/2008/amer_semifinal/mixing_bowls/solution.rs"
 
 [[bin]]
+name = "test_passing_probability"
+path = "codejam/2008/amer_semifinal/test_passing_probability/solution.rs"
+
+[[bin]]
 name = "fly_swatter"
 path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
+
+[[bin]]
+name = "saving_the_universe"
+path = "codejam/2008/qualification_round/saving_the_universe/solution.rs"
+
+[[bin]]
+name = "train_timetable"
+path = "codejam/2008/qualification_round/train_timetable/solution.rs"
 
 [[bin]]
 name = "milkshakes"

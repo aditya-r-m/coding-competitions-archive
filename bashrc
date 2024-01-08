@@ -20,7 +20,10 @@ function crs() {
   spath=$(python3 -c 'print("/".join("'$(pwd)'".split("/")[3:]))')
   sname=$(python3 -c 'print("'$(pwd)'".split("/")[-1])')
   if [ ! -f solution.rs ]; then
-    touch solution.rs
+    printf 'lib::run!();\n
+struct TestCase {}\n
+fn read() -> TestCase {\n    todo!()\n}\n
+fn solve(TestCase {}: TestCase) -> String {\n    todo!()\n}\n' > solution.rs
     ctoml=/root/coding-competitions-archive/Cargo.toml
     printf "\n[[bin]]\nname = \""$sname"\"\npath = \""$spath"/solution.rs\"\n" >> $ctoml
     python3 -c '
