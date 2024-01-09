@@ -40,6 +40,14 @@ name = "milkshakes"
 path = "codejam/2008/round_1a/milkshakes/solution.rs"
 
 [[bin]]
+name = "minimum_scalar_product"
+path = "codejam/2008/round_1a/minimum_scalar_product/solution.rs"
+
+[[bin]]
+name = "numbers"
+path = "codejam/2008/round_1a/numbers/solution.rs"
+
+[[bin]]
 name = "number_sets"
 path = "codejam/2008/round_1b/number_sets/solution.rs"
 

@@ -1,3 +1,101 @@
+use std::ops::{Add, Mul};
+
+#[derive(Clone, Copy)]
+pub struct ModInt {
+    pub i: usize,
+    pub m: usize,
+}
+
+impl Add for ModInt {
+    type Output = ModInt;
+    fn add(self, other: ModInt) -> ModInt {
+        assert!(self.m == other.m);
+        ModInt {
+            i: (self.i + other.i) % self.m,
+            m: self.m,
+        }
+    }
+}
+
+impl Mul for ModInt {
+    type Output = ModInt;
+    fn mul(self, other: ModInt) -> ModInt {
+        assert!(self.m == other.m);
+        ModInt {
+            i: (self.i * other.i) % self.m,
+            m: self.m,
+        }
+    }
+}
+
+pub trait AddIdentity {
+    fn add_identity(&self) -> Self;
+}
+
+impl AddIdentity for ModInt {
+    fn add_identity(&self) -> Self {
+        ModInt { i: 0, m: self.m }
+    }
+}
+
+pub trait MulIdentity {
+    fn mul_identity(&self) -> Self;
+}
+
+impl MulIdentity for ModInt {
+    fn mul_identity(&self) -> Self {
+        ModInt { i: 1, m: self.m }
+    }
+}
+
+#[derive(Clone)]
+pub struct SquareMatrix<T> {
+    pub rows: Vec<Vec<T>>,
+    n: usize,
+}
+
+impl<T> SquareMatrix<T> {
+    pub fn new(rows: Vec<Vec<T>>) -> SquareMatrix<T> {
+        let n = rows.len();
+        for row in rows.iter() {
+            assert!(n == row.len());
+        }
+        SquareMatrix { rows, n }
+    }
+}
+
+impl<T> Mul<SquareMatrix<T>> for SquareMatrix<T>
+where
+    T: Add<Output = T> + Mul<Output = T> + AddIdentity + Copy,
+{
+    type Output = SquareMatrix<T>;
+    fn mul(self, other: SquareMatrix<T>) -> SquareMatrix<T> {
+        assert!(self.n == other.n);
+        let mut rows = vec![vec![self.rows[0][0].add_identity(); self.n]; self.n];
+        for i in 0..self.n {
+            for j in 0..self.n {
+                for k in 0..self.n {
+                    rows[i][j] = rows[i][j] + self.rows[i][k] * other.rows[k][j];
+                }
+            }
+        }
+        SquareMatrix { rows, n: self.n }
+    }
+}
+
+impl<T> MulIdentity for SquareMatrix<T>
+where
+    T: Add<Output = T> + Mul<Output = T> + AddIdentity + Copy + MulIdentity,
+{
+    fn mul_identity(&self) -> SquareMatrix<T> {
+        let mut rows = vec![vec![self.rows[0][0].add_identity(); self.n]; self.n];
+        for i in 0..self.n {
+            rows[i][i] = self.rows[0][0].mul_identity();
+        }
+        SquareMatrix { rows, n: self.n }
+    }
+}
+
 pub struct DisjointSet {
     links: Vec<usize>,
     ranks: Vec<usize>,

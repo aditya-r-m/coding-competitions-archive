@@ -1,14 +1,18 @@
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::collections::VecDeque;
+use std::ops::Mul;
 
-pub fn mod_exp(a: usize, p: usize, m: usize) -> usize {
+pub fn exp<T>(a: T, p: usize) -> T
+where
+    T: Clone + crate::collections::MulIdentity + Mul<Output = T>,
+{
     if p == 0 {
-        1
+        a.mul_identity()
     } else if p & 1 == 0 {
-        mod_exp((a * a) % m, p >> 1, m)
+        exp(a.clone() * a, p >> 1)
     } else {
-        (a * mod_exp(a, p - 1, m)) % m
+        a.clone() * exp(a, p - 1)
     }
 }
 
@@ -24,7 +28,8 @@ pub fn is_probable_prime(n: usize) -> bool {
         s += 1;
     }
     for base in bases {
-        let mut x = mod_exp(base, d, n);
+        let crate::collections::ModInt { i: mut x, m: _ } =
+            exp(crate::collections::ModInt { i: base, m: n }, d);
         for _ in 0..s {
             x = {
                 let y = (x * x) % n;
