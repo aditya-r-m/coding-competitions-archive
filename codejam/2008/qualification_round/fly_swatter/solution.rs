@@ -27,10 +27,8 @@ fn fly_swatting_probability(f: f64, mut l: f64, mut t: f64, mut r: f64, mut g: f
     if l <= 0_f64 || g <= 0_f64 {
         return 1_f64;
     }
-
     let mut clipping_squares: Vec<(f64, f64)> = Vec::new();
     let mut clipping_squares_next: Vec<(f64, f64)> = Vec::new();
-
     let mut open_area_lower_bound = 0_f64;
     let mut open_area_upper_bound = 0_f64;
     {
@@ -49,7 +47,6 @@ fn fly_swatting_probability(f: f64, mut l: f64, mut t: f64, mut r: f64, mut g: f
             x += g + 2_f64 * r;
         }
     }
-
     if clipping_squares.len() == 0 {
         return 1_f64 - open_area_upper_bound / total_area;
     }

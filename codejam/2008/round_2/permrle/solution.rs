@@ -26,7 +26,6 @@ fn solve(TestCase { k, s }: TestCase) -> usize {
             }
         }
     }
-
     let mut cache: Vec<Vec<Vec<usize>>> = vec![vec![vec![usize::max_value(); k]; k]; 1 << k];
     let mut cur_layer: HashSet<usize> = HashSet::new();
     let mut nxt_layer: HashSet<usize> = HashSet::new();
@@ -67,7 +66,6 @@ fn solve(TestCase { k, s }: TestCase) -> usize {
         cur_layer.clear();
         [cur_layer, nxt_layer] = [nxt_layer, cur_layer];
     }
-
     let mut sol = usize::max_value();
     let l = (1 << k) - 1;
     for i in 0..k {
@@ -78,6 +76,5 @@ fn solve(TestCase { k, s }: TestCase) -> usize {
             sol = std::cmp::min(sol, 1 + cache[l][i][j] + outer_cost[j][i]);
         }
     }
-
     sol
 }

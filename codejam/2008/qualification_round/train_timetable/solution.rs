@@ -12,10 +12,9 @@ fn read() -> TestCase {
     let mut trains_a_to_b: Vec<(usize, usize)> = Vec::new();
     let mut trains_b_to_a: Vec<(usize, usize)> = Vec::new();
     for i in 0..count_a_to_b + count_b_to_a {
-        lib::input!(schedule);
-        let mut schedule_entries = schedule.split_whitespace();
-        let start_time = parse(schedule_entries.next().unwrap().to_string());
-        let end_time = parse(schedule_entries.next().unwrap().to_string());
+        lib::input!(Vec<String> as schedule);
+        let start_time = parse(&schedule[0]);
+        let end_time = parse(&schedule[1]);
         if i < count_a_to_b {
             trains_a_to_b.push((start_time, end_time));
         } else {
@@ -29,7 +28,7 @@ fn read() -> TestCase {
     }
 }
 
-fn parse(clock_time: String) -> usize {
+fn parse(clock_time: &str) -> usize {
     let clock_time_chars = clock_time.chars().collect::<Vec<char>>();
     (clock_time_chars[0].to_digit(10).unwrap() * 600
         + clock_time_chars[1].to_digit(10).unwrap() * 60

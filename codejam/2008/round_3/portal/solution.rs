@@ -108,10 +108,8 @@ fn bfs(source: Point, target: Point, grid: Vec<Vec<bool>>) -> Option<usize> {
                 }
             }
         }
-
         (current_layer, next_layer) = (next_layer, current_layer);
         distance += 1;
     }
-
     None
 }

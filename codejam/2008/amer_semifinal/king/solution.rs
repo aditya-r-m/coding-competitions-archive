@@ -16,7 +16,6 @@ fn read() -> TestCase {
             source = (r, c);
         }
     }
-
     TestCase { grid, source }
 }
 
@@ -79,7 +78,6 @@ fn maximum_matching(
             }
         }
     }
-
     cache[i][j][m] = Some(v);
     v
 }

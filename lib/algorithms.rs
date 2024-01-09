@@ -145,6 +145,5 @@ pub fn maximum_flow(graph: &Vec<HashMap<usize, i64>>, s: usize, t: usize) -> i64
         queue_set.remove(&u);
         flow_graph.discharge(u, &mut queue, &mut queue_set);
     }
-
     flow_graph.excess[t]
 }
