@@ -6,6 +6,12 @@ pub struct ModInt {
     pub m: usize,
 }
 
+impl ModInt {
+    pub fn new(i: usize, m: usize) -> ModInt {
+        ModInt { i: i % m, m }
+    }
+}
+
 impl Add for ModInt {
     type Output = ModInt;
     fn add(self, other: ModInt) -> ModInt {

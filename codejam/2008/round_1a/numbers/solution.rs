@@ -6,7 +6,7 @@ fn read() -> usize {
 }
 
 fn solve(n: usize) -> String {
-    let mod_int = |i| lib::collections::ModInt { i, m: 1000 };
+    let mod_int = |i| lib::collections::ModInt::new(i, 1000);
     let lib::collections::ModInt { i: v, m: _ } = mod_int(999)
         + mod_int(2)
             * lib::algorithms::exp(

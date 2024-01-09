@@ -48,6 +48,10 @@ name = "numbers"
 path = "codejam/2008/round_1a/numbers/solution.rs"
 
 [[bin]]
+name = "crop_triangles"
+path = "codejam/2008/round_1b/crop_triangles/solution.rs"
+
+[[bin]]
 name = "number_sets"
 path = "codejam/2008/round_1b/number_sets/solution.rs"
 

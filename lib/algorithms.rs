@@ -29,7 +29,7 @@ pub fn is_probable_prime(n: usize) -> bool {
     }
     for base in bases {
         let crate::collections::ModInt { i: mut x, m: _ } =
-            exp(crate::collections::ModInt { i: base, m: n }, d);
+            exp(crate::collections::ModInt::new(base, n), d);
         for _ in 0..s {
             x = {
                 let y = (x * x) % n;
