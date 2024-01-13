@@ -47,7 +47,6 @@ function hxs() {
 
 function fw() {
   [[ -z "$!" ]] && { return 0; }
-  echo -ne "cpu \e[45m \e[0m\nmem \e[44m \e[0m\nsec \e[40m \e[0m\n"
 
   while true; do
     sleep 1
@@ -76,10 +75,11 @@ function fw() {
     for i in $(seq 0 $(($sec > 100 ? 100 : $sec))); do outs="${outs}\e[40m \e[0m"; done;
     outs="${outs} $sec\n"
 
-    echo -ne '\033[1A\033[K'
-    echo -ne '\033[1A\033[K'
-    echo -ne '\033[1A\033[K'
+    clear
+    echo -ne "\033[01;32mResource Utilization\033[00m\n"
     echo -ne $outs
+    echo -ne "\n\n\033[01;32mOutput Preview \033[00m\n\n"
+    tail -n16 $sout | cut -c -128
   done
 }
 
@@ -108,7 +108,6 @@ function rn() {(
   fi
   /root/coding-competitions-archive/target/release/$sname < $sin &> $sout &
   fw
-  less $sout
 )}
 
 alias rns="rn 1"
