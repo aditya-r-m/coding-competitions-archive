@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::ops::{Add, Mul};
+use std::ops::{Add, AddAssign, Mul};
 
 #[derive(Clone, Copy, Debug)]
 pub struct ModInt {
@@ -21,6 +21,12 @@ impl Add for ModInt {
             i: (self.i + other.i) % self.m,
             m: self.m,
         }
+    }
+}
+
+impl AddAssign for ModInt {
+    fn add_assign(&mut self, other: Self) {
+        self.i = (self.i + other.i) % self.m;
     }
 }
 
@@ -139,38 +145,38 @@ impl DisjointSet {
 }
 
 #[derive(Debug)]
-pub struct BinaryIndexedTree {
-    values: Vec<usize>,
-    m: usize,
+pub struct BinaryIndexedTree<T>
+where
+    T: AddAssign + Copy,
+{
+    values: Vec<T>,
 }
 
-impl BinaryIndexedTree {
-    pub fn new(n: usize, m: usize) -> BinaryIndexedTree {
+impl<T> BinaryIndexedTree<T>
+where
+    T: AddAssign + Copy,
+{
+    pub fn new(value: T, n: usize) -> BinaryIndexedTree<T> {
         BinaryIndexedTree {
-            values: vec![0; n],
-            m,
+            values: vec![value; n],
         }
     }
 
-    pub fn add(&mut self, mut i: usize, v: usize) {
+    pub fn add(&mut self, mut i: usize, v: T) {
         if i == 0 {
             self.values[0] += v;
-            self.values[0] %= self.m;
             return;
         }
         while i < self.values.len() {
             self.values[i] += v;
-            self.values[0] %= self.m;
             i += i & (!i + 1);
         }
     }
 
-    pub fn get(&self, mut i: usize) -> usize {
+    pub fn get(&self, mut i: usize) -> T {
         let mut result = self.values[0];
-
         while i > 0 {
             result += self.values[i];
-            result %= self.m;
             i -= i & (!i + 1);
         }
         result

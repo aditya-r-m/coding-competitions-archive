@@ -19,15 +19,16 @@ fn read() -> Vec<usize> {
 
 fn solve(mut speed_limits: Vec<usize>) -> String {
     speed_limits = compress(speed_limits);
+    let mod_int = |i| lib::collections::ModInt { i, m: M };
     let n = speed_limits.len();
-    let mut cache = lib::collections::BinaryIndexedTree::new(n, M);
+    let mut cache = lib::collections::BinaryIndexedTree::new(mod_int(0), n);
     for v in speed_limits.into_iter() {
-        cache.add(v, 1);
+        cache.add(v, mod_int(1));
         if v > 0 {
             cache.add(v, cache.get(v - 1));
         }
     }
-    format!("{}", cache.get(n - 1))
+    format!("{}", cache.get(n - 1).i)
 }
 
 fn compress(speed_limits: Vec<usize>) -> Vec<usize> {
