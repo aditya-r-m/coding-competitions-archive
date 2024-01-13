@@ -33,17 +33,17 @@ fn solve(TestCase { k, queries }: TestCase) -> String {
                 )
             }
         },
-        |min, _, ov, root, left, _| {
+        |min, _, value, root, left, _| {
             if root.min == root.max {
-                HashMap::from([(SegmentDirection::Term, (min, min, ov))])
+                HashMap::from([(SegmentDirection::Term, (min, min, value))])
             } else {
                 let left_space = SegmentTree::annotation_or(left, root.left_max - root.min + 1);
                 if left_space > min {
-                    HashMap::from([(SegmentDirection::Left, (min, min, ov))])
+                    HashMap::from([(SegmentDirection::Left, (min, min, value))])
                 } else {
                     HashMap::from([(
                         SegmentDirection::Right,
-                        (min - left_space, min - left_space, ov),
+                        (min - left_space, min - left_space, value),
                     )])
                 }
             }
