@@ -68,6 +68,10 @@ name = "text_messaging_outrage"
 path = "codejam/2008/round_1c/text_messaging_outrage/solution.rs"
 
 [[bin]]
+name = "ugly_numbers"
+path = "codejam/2008/round_1c/ugly_numbers/solution.rs"
+
+[[bin]]
 name = "permrle"
 path = "codejam/2008/round_2/permrle/solution.rs"
 
