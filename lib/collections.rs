@@ -1,6 +1,7 @@
+use std::collections::HashMap;
 use std::ops::{Add, Mul};
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct ModInt {
     pub i: usize,
     pub m: usize,
@@ -54,7 +55,7 @@ impl MulIdentity for ModInt {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct SquareMatrix<T> {
     pub rows: Vec<Vec<T>>,
     n: usize,
@@ -102,6 +103,7 @@ where
     }
 }
 
+#[derive(Debug)]
 pub struct DisjointSet {
     links: Vec<usize>,
     ranks: Vec<usize>,
@@ -136,6 +138,7 @@ impl DisjointSet {
     }
 }
 
+#[derive(Debug)]
 pub struct BinaryIndexedTree {
     values: Vec<usize>,
     m: usize,
@@ -171,5 +174,179 @@ impl BinaryIndexedTree {
             i -= i & (!i + 1);
         }
         result
+    }
+}
+
+#[derive(Debug)]
+pub struct SegmentNode<V, A> {
+    pub min: usize,
+    pub max: usize,
+    pub left_max: usize,
+    pub right_min: usize,
+    pub value: Option<V>,
+    pub annotation: Option<A>,
+}
+
+#[derive(PartialEq, Eq, Hash)]
+pub enum SegmentDirection {
+    Term,
+    Left,
+    Right,
+}
+
+pub type SegmentAnnotator<V, A> =
+    fn(&SegmentNode<V, A>, Option<&SegmentNode<V, A>>, Option<&SegmentNode<V, A>>) -> Option<A>;
+
+pub type SegmentPropogator<V, A> = fn(
+    min: usize,
+    max: usize,
+    value: Option<V>,
+    &SegmentNode<V, A>,
+    Option<&SegmentNode<V, A>>,
+    Option<&SegmentNode<V, A>>,
+) -> HashMap<SegmentDirection, (usize, usize, Option<V>)>;
+
+pub type SegmentNavigator<V, A> = fn(
+    min: usize,
+    max: usize,
+    &SegmentNode<V, A>,
+    Option<&SegmentNode<V, A>>,
+    Option<&SegmentNode<V, A>>,
+) -> (SegmentDirection, usize, usize);
+
+#[derive(Debug)]
+pub struct SegmentTree<V, A> {
+    node: SegmentNode<V, A>,
+    left_subtree: Option<Box<SegmentTree<V, A>>>,
+    right_subtree: Option<Box<SegmentTree<V, A>>>,
+    annotator: SegmentAnnotator<V, A>,
+    propogator: SegmentPropogator<V, A>,
+    navigator: SegmentNavigator<V, A>,
+}
+
+impl<V, A> SegmentTree<V, A>
+where
+    V: Copy,
+    A: Copy,
+{
+    pub fn create(
+        min: usize,
+        max: usize,
+        annotator: SegmentAnnotator<V, A>,
+        propogator: SegmentPropogator<V, A>,
+        navigator: SegmentNavigator<V, A>,
+    ) -> SegmentTree<V, A> {
+        let mut segment_tree = SegmentTree {
+            node: SegmentNode {
+                min,
+                max,
+                left_max: min + ((max - min) >> 1),
+                right_min: std::cmp::min(max, 1 + min + ((max - min) >> 1)),
+                value: None,
+                annotation: None,
+            },
+            left_subtree: None,
+            right_subtree: None,
+            annotator,
+            propogator,
+            navigator,
+        };
+        segment_tree.annotate();
+        segment_tree
+    }
+
+    fn left_node(&self) -> Option<&SegmentNode<V, A>> {
+        if let Some(l) = self.left_subtree.as_ref() {
+            Some(&l.node)
+        } else {
+            None
+        }
+    }
+
+    fn right_node(&self) -> Option<&SegmentNode<V, A>> {
+        if let Some(r) = self.right_subtree.as_ref() {
+            Some(&r.node)
+        } else {
+            None
+        }
+    }
+
+    pub fn annotation_or(node: Option<&SegmentNode<V, A>>, a: A) -> A {
+        if let Some(n) = node {
+            n.annotation.unwrap_or(a)
+        } else {
+            a
+        }
+    }
+
+    fn touch_left(&mut self) {
+        if self.left_subtree.is_none() {
+            self.left_subtree = Some(Box::new(Self::create(
+                self.node.min,
+                self.node.left_max,
+                self.annotator,
+                self.propogator,
+                self.navigator,
+            )));
+        }
+    }
+
+    fn touch_right(&mut self) {
+        if self.right_subtree.is_none() {
+            self.right_subtree = Some(Box::new(Self::create(
+                self.node.right_min,
+                self.node.max,
+                self.annotator,
+                self.propogator,
+                self.navigator,
+            )));
+        }
+    }
+
+    fn annotate(&mut self) {
+        self.node.annotation = (self.annotator)(&self.node, self.left_node(), self.right_node());
+    }
+
+    pub fn insert(&mut self, min: usize, max: usize, value: Option<V>) {
+        let scope = (self.propogator)(
+            min,
+            max,
+            value,
+            &self.node,
+            self.left_node(),
+            self.right_node(),
+        );
+        if let Some(&(_, _, value)) = scope.get(&SegmentDirection::Term) {
+            self.node.value = value;
+        }
+        if let Some(&(min, max, value)) = scope.get(&SegmentDirection::Left) {
+            self.touch_left();
+            self.left_subtree.as_mut().unwrap().insert(min, max, value);
+        }
+        if let Some(&(min, max, value)) = scope.get(&SegmentDirection::Right) {
+            self.touch_right();
+            self.right_subtree.as_mut().unwrap().insert(min, max, value);
+        }
+        self.annotate()
+    }
+
+    pub fn query(&self, min: usize, max: usize) -> Option<V> {
+        match (self.navigator)(min, max, &self.node, self.left_node(), self.right_node()) {
+            (SegmentDirection::Term, _, _) => self.node.value,
+            (SegmentDirection::Left, min, max) => {
+                if self.left_subtree.is_none() {
+                    None
+                } else {
+                    self.left_subtree.as_ref().unwrap().query(min, max)
+                }
+            }
+            (SegmentDirection::Right, min, max) => {
+                if self.right_subtree.is_none() {
+                    None
+                } else {
+                    self.right_subtree.as_ref().unwrap().query(min, max)
+                }
+            }
+        }
     }
 }
