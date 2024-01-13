@@ -76,10 +76,11 @@ function fw() {
     outs="${outs} $sec\n"
 
     clear
-    echo -ne "\033[01;32mResource Utilization\033[00m\n"
+    echo -ne "\n\033[01;32mResource Utilization\033[00m\n\n"
     echo -ne $outs
-    echo -ne "\n\n\033[01;32mOutput Preview \033[00m\n\n"
+    echo -ne "\n\033[01;32mOutput Preview \033[00m\n\n"
     tail -n16 $sout | cut -c -128
+    echo -ne "\n"
   done
 }
 
