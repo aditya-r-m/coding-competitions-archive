@@ -72,6 +72,10 @@ name = "ugly_numbers"
 path = "codejam/2008/round_1c/ugly_numbers/solution.rs"
 
 [[bin]]
+name = "cheating_a_boolean_tree"
+path = "codejam/2008/round_2/cheating_a_boolean_tree/solution.rs"
+
+[[bin]]
 name = "permrle"
 path = "codejam/2008/round_2/permrle/solution.rs"
 
