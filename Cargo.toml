@@ -80,6 +80,10 @@ name = "permrle"
 path = "codejam/2008/round_2/permrle/solution.rs"
 
 [[bin]]
+name = "star_wars"
+path = "codejam/2008/round_2/star_wars/solution.rs"
+
+[[bin]]
 name = "no_cheating"
 path = "codejam/2008/round_3/no_cheating/solution.rs"
 
