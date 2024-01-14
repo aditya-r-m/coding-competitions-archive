@@ -84,6 +84,10 @@ name = "star_wars"
 path = "codejam/2008/round_2/star_wars/solution.rs"
 
 [[bin]]
+name = "triangle_areas"
+path = "codejam/2008/round_2/triangle_areas/solution.rs"
+
+[[bin]]
 name = "no_cheating"
 path = "codejam/2008/round_3/no_cheating/solution.rs"
 
