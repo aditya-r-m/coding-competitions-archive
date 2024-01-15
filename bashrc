@@ -76,7 +76,7 @@ function fw() {
     outs="${outs} $sec\n"
 
     clear
-    echo -ne "\n\033[01;32mResource Utilization\033[00m\n\n"
+    echo -ne "\033[01;32mResource Utilization\033[00m\n\n"
     echo -ne $outs
     echo -ne "\n\033[01;32mOutput Preview \033[00m\n\n"
     tail -n16 $sout | cut -c -128
@@ -111,6 +111,10 @@ function rn() {(
   fw
 )}
 
+alias l1i="less $s1in"
+alias l1o="less $s1out"
+alias l2i="less $s2in"
+alias l2o="less $s2out"
 alias rns="rn 1"
 alias rnl="rn 2"
 alias ga="git add"
