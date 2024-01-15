@@ -1,7 +1,9 @@
 use std::collections::HashMap;
-use std::ops::{Add, AddAssign, Mul};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
-#[derive(Clone, Copy, Debug)]
+use crate::algorithms;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct ModInt {
     pub i: usize,
     pub m: usize,
@@ -11,33 +13,85 @@ impl ModInt {
     pub fn new(i: usize, m: usize) -> ModInt {
         ModInt { i: i % m, m }
     }
+
+    fn inv(&self) -> ModInt {
+        assert!(self.i != 0);
+        assert!(algorithms::is_probable_prime(self.m));
+        let mut p0 = 0;
+        let mut d0 = self.m;
+        let mut p1 = 1;
+        let mut d1 = self.i;
+        while d1 > 1 {
+            let r = d0 / d1;
+            [p0, d0, p1, d1] = [
+                p1,
+                d1,
+                (self.m + p0 - (r * p1) % self.m) % self.m,
+                (self.m + d0 - (r * d1) % self.m) % self.m,
+            ];
+        }
+        ModInt::new(p1, self.m)
+    }
+}
+
+impl Neg for ModInt {
+    type Output = ModInt;
+    fn neg(self) -> ModInt {
+        ModInt::new(self.m - self.i, self.m)
+    }
 }
 
 impl Add for ModInt {
     type Output = ModInt;
-    fn add(self, other: ModInt) -> ModInt {
-        assert!(self.m == other.m);
-        ModInt {
-            i: (self.i + other.i) % self.m,
-            m: self.m,
-        }
+    fn add(self, rhs: ModInt) -> ModInt {
+        assert!(self.m == rhs.m);
+        ModInt::new((self.i + rhs.i) % self.m, self.m)
     }
 }
 
 impl AddAssign for ModInt {
-    fn add_assign(&mut self, other: Self) {
-        self.i = (self.i + other.i) % self.m;
+    fn add_assign(&mut self, rhs: Self) {
+        *self = ModInt::add(*self, rhs);
+    }
+}
+
+impl Sub for ModInt {
+    type Output = ModInt;
+    fn sub(self, rhs: Self) -> ModInt {
+        ModInt::add(self, rhs.neg())
+    }
+}
+
+impl SubAssign for ModInt {
+    fn sub_assign(&mut self, rhs: Self) {
+        *self = ModInt::sub(*self, rhs);
     }
 }
 
 impl Mul for ModInt {
     type Output = ModInt;
-    fn mul(self, other: ModInt) -> ModInt {
-        assert!(self.m == other.m);
-        ModInt {
-            i: (self.i * other.i) % self.m,
-            m: self.m,
-        }
+    fn mul(self, rhs: ModInt) -> ModInt {
+        assert!(self.m == rhs.m);
+        ModInt::new((self.i * rhs.i) % self.m, self.m)
+    }
+}
+
+impl MulAssign for ModInt {
+    fn mul_assign(&mut self, rhs: Self) {
+        *self = ModInt::mul(*self, rhs);
+    }
+}
+
+impl Div for ModInt {
+    type Output = ModInt;
+    fn div(self, rhs: ModInt) -> ModInt {
+        ModInt::mul(self, rhs.inv())
+    }
+}
+
+impl DivAssign for ModInt {
+    fn div_assign(&mut self, rhs: Self) {
+        *self = ModInt::div(*self, rhs);
     }
 }
 
@@ -47,7 +101,7 @@ pub trait AddIdentity {
 
 impl AddIdentity for ModInt {
     fn add_identity(&self) -> Self {
-        ModInt { i: 0, m: self.m }
+        ModInt::new(0, self.m)
     }
 }
 
@@ -57,7 +111,7 @@ pub trait MulIdentity {
 
 impl MulIdentity for ModInt {
     fn mul_identity(&self) -> Self {
-        ModInt { i: 1, m: self.m }
+        ModInt::new(1, self.m)
     }
 }
 
@@ -82,13 +136,13 @@ where
     T: Add<Output = T> + Mul<Output = T> + AddIdentity + Copy,
 {
     type Output = SquareMatrix<T>;
-    fn mul(self, other: SquareMatrix<T>) -> SquareMatrix<T> {
-        assert!(self.n == other.n);
+    fn mul(self, rhs: SquareMatrix<T>) -> SquareMatrix<T> {
+        assert!(self.n == rhs.n);
         let mut rows = vec![vec![self.rows[0][0].add_identity(); self.n]; self.n];
         for i in 0..self.n {
             for j in 0..self.n {
                 for k in 0..self.n {
-                    rows[i][j] = rows[i][j] + self.rows[i][k] * other.rows[k][j];
+                    rows[i][j] = rows[i][j] + self.rows[i][k] * rhs.rows[k][j];
                 }
             }
         }
