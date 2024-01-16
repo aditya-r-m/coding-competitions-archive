@@ -19,10 +19,6 @@ macro_rules! input {
             .map(|s| s.parse::<$type>().expect("Parsable"))
             .collect::<Vec<$type>>();
     };
-    ($type:ty as $out:ident) => {
-        lib::input!(buffer);
-        let $out = buffer.parse::<$type>().expect("Parsable");
-    };
     ([$type:ty; $x:expr] as $out:pat_param) => {
         lib::input!(Vec<$type> as vector);
         let mut buffer: [$type; $x] = [<$type>::default(); $x];
@@ -30,6 +26,10 @@ macro_rules! input {
             buffer[i] = vector[i];
         }
         let $out = buffer;
+    };
+    ($type:ty as $out:pat_param) => {
+        lib::input!(buffer);
+        let $out = buffer.parse::<$type>().expect("Parsable");
     };
 }
 

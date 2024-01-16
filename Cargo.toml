@@ -92,6 +92,10 @@ name = "endless_knight"
 path = "codejam/2008/round_3/endless_knight/solution.rs"
 
 [[bin]]
+name = "how_big_are_the_pockets"
+path = "codejam/2008/round_3/how_big_are_the_pockets/solution.rs"
+
+[[bin]]
 name = "no_cheating"
 path = "codejam/2008/round_3/no_cheating/solution.rs"
 
