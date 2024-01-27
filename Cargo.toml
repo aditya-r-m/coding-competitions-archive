@@ -24,6 +24,10 @@ name = "test_passing_probability"
 path = "codejam/2008/amer_semifinal/test_passing_probability/solution.rs"
 
 [[bin]]
+name = "apocalypse_soon"
+path = "codejam/2008/apac_semifinal/apocalypse_soon/solution.rs"
+
+[[bin]]
 name = "fly_swatter"
 path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
 
