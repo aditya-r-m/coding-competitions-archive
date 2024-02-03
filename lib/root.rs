@@ -39,7 +39,10 @@ macro_rules! run {
         fn main() {
             lib::input!(usize as test_case_count);
             for test_case_index in 1..1 + test_case_count {
-                println!("Case #{test_case_index}: {}", solve(read()));
+                print!(
+                    "{}",
+                    format!("Case #{test_case_index}: {}\n", solve(read())).replace(" \n", "\n")
+                );
             }
         }
     };
