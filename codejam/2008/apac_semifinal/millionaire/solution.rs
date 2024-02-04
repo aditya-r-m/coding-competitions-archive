@@ -7,12 +7,8 @@ struct TestCase {
 }
 
 fn read() -> TestCase {
-    lib::input!([f64; 3] as [f, p, x]);
-    TestCase {
-        m: f as usize,
-        p,
-        x,
-    }
+    lib::input!((usize, f64, f64) as (m, p, x));
+    TestCase { m, p, x }
 }
 
 fn solve(TestCase { m, p, x }: TestCase) -> String {

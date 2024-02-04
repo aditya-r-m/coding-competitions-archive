@@ -15,13 +15,13 @@ fn read() -> TestCase {
     let mut query_metrics: Vec<(usize, usize)> = Vec::new();
     lib::input!(usize as n);
     for _ in 0..n {
-        lib::input!(Vec<String> as row);
-        if row[2] == "BIRD" {
+        lib::input!((usize, usize, String) as (h, w, x));
+        if x == "BIRD" {
             &mut bird_metrics
         } else {
             &mut not_bird_metrics
         }
-        .push((row[0].parse().unwrap(), row[1].parse().unwrap()));
+        .push((h, w));
     }
     lib::input!(usize as m);
     for _ in 0..m {
