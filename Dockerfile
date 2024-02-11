@@ -5,33 +5,27 @@ FROM ubuntu
 
 RUN apt-get update && \
     apt-get install -y \
+    software-properties-common \
     build-essential \
+    python3-pip \
+    poppler-utils \
     curl \
     git \
-    software-properties-common
+    fzf
 
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-RUN rustup component add rust-analyzer
-
-RUN apt-get update && \
-    apt-get install -y python3-pip
-
-RUN pip install -U 'python-lsp-server[all]'
-
-RUN add-apt-repository ppa:maveonair/helix-editor && \
-    apt-get update && \
-    apt-get install -y helix
-
-RUN apt-get update && \
-    apt-get install -y \
-    fzf \
-    poppler-utils
-
-COPY helix-config.toml /root/.config/helix/config.toml
-COPY helix-languages.toml /root/.config/helix/languages.toml
 COPY inputrc /root/.inputrc
 COPY bashrc /root/.bashrc
 
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+RUN pip install -U 'python-lsp-server[all]'
+RUN rustup component add rust-analyzer
+
+RUN curl -LJo helix.tar.xz https://github.com/helix-editor/helix/releases/download/23.10/helix-23.10-x86_64-linux.tar.xz
+RUN tar -xvf helix.tar.xz
+RUN mv helix-*/hx /usr/local/bin
+RUN mkdir -p /root/.config/helix && mv helix-*/runtime /root/.config/helix/runtime
+
+COPY helix-config.toml /root/.config/helix/config.toml
+COPY helix-languages.toml /root/.config/helix/languages.toml

@@ -2,14 +2,17 @@ theme = "autumn"
 
 [editor]
 line-number = "relative"
+true-color = true
 
 [keys.normal]
 C-w = ":w"
 C-x = ":x"
+C-q = ":q!"
 "^" = "goto_line_start"
 "$" = "goto_line_end"
 
 [keys.insert]
 C-w = ":w"
+C-q = ":q!"
 C-x = "normal_mode"
 
