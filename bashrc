@@ -37,7 +37,7 @@ file.close()'
 
 function hxs() {
   if [ -f solution.rs ]; then
-    hx solution.rs
+    hx solution.rs $s1in $s2in
   else
     echo -ne "no solution found\n"
   fi
