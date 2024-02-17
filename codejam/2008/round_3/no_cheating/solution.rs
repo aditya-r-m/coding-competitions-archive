@@ -24,12 +24,12 @@ fn solve(grid: Vec<Vec<char>>) -> String {
             .sum::<usize>()
             - {
                 let (graph, s, t) = parse(grid);
-                lib::algorithms::maximum_flow(&graph, s, t) as usize
+                lib::algorithms::maximum_flow(&graph, s, t)
             }
     )
 }
 
-fn parse(mut grid: Vec<Vec<char>>) -> (Vec<HashMap<usize, i64>>, usize, usize) {
+fn parse(mut grid: Vec<Vec<char>>) -> (Vec<HashMap<usize, usize>>, usize, usize) {
     let nr = grid.len();
     let nc = grid[0].len() + (grid[0].len() & 1);
     if nc != grid[0].len() {
@@ -38,7 +38,7 @@ fn parse(mut grid: Vec<Vec<char>>) -> (Vec<HashMap<usize, i64>>, usize, usize) {
         }
     }
 
-    let mut graph: Vec<HashMap<usize, i64>> = vec![HashMap::new(); nr * nc];
+    let mut graph: Vec<HashMap<usize, usize>> = vec![HashMap::new(); nr * nc];
     let norm = |i, j| i * nc + j;
     for i in 0..nr {
         for j in 1..nc {

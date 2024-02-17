@@ -56,7 +56,7 @@ struct FlowGraph {
 }
 
 impl FlowGraph {
-    fn new(graph: &Vec<HashMap<usize, i64>>) -> FlowGraph {
+    fn new(graph: Vec<HashMap<usize, i64>>) -> FlowGraph {
         let mut capacity_graph = graph.clone();
         let mut empty_flow = vec![HashMap::new(); graph.len()];
         let mut linked_arcs = vec![Vec::new(); graph.len()];
@@ -124,10 +124,19 @@ impl FlowGraph {
     }
 }
 
-pub fn maximum_flow(graph: &Vec<HashMap<usize, i64>>, s: usize, t: usize) -> i64 {
+pub fn maximum_flow(graph: &[HashMap<usize, usize>], s: usize, t: usize) -> usize {
     let mut queue: VecDeque<usize> = VecDeque::new();
     let mut queue_set: HashSet<usize> = HashSet::new();
-    let mut flow_graph = FlowGraph::new(graph);
+    let mut flow_graph = FlowGraph::new(
+        graph
+            .iter()
+            .map(|m| {
+                m.iter()
+                    .map(|(&k, &v)| (k, v as i64))
+                    .collect::<HashMap<usize, i64>>()
+            })
+            .collect::<Vec<HashMap<usize, i64>>>(),
+    );
     flow_graph.labels[s] = graph.len();
     flow_graph.excess[s] = i64::MAX;
     queue_set.insert(s);
@@ -145,5 +154,5 @@ pub fn maximum_flow(graph: &Vec<HashMap<usize, i64>>, s: usize, t: usize) -> i64
         queue_set.remove(&u);
         flow_graph.discharge(u, &mut queue, &mut queue_set);
     }
-    flow_graph.excess[t]
+    flow_graph.excess[t] as usize
 }
