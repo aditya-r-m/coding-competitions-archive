@@ -46,120 +46,70 @@ pub fn is_probable_prime(n: usize) -> bool {
     true
 }
 
-struct FlowGraph {
-    capacity: Vec<HashMap<usize, i64>>,
-    flow: Vec<HashMap<usize, i64>>,
-    labels: Vec<usize>,
-    excess: Vec<i64>,
-    linked_arcs: Vec<Vec<usize>>,
-    current_arc: Vec<usize>,
-}
-
-impl FlowGraph {
-    fn new(graph: Vec<HashMap<usize, i64>>) -> FlowGraph {
-        let mut capacity_graph = graph.clone();
-        let mut empty_flow = vec![HashMap::new(); graph.len()];
-        let mut linked_arcs = vec![Vec::new(); graph.len()];
-        for (u, edges) in graph.iter().enumerate() {
-            for &v in edges.keys() {
-                capacity_graph[u].insert(v, graph[u][&v]);
-                if !graph[v].contains_key(&u) {
-                    capacity_graph[v].insert(u, 0);
-                }
-                empty_flow[u].insert(v, 0);
-                empty_flow[v].insert(u, 0);
-                linked_arcs[u].push(v);
+pub fn maximum_flow(graph: &[HashMap<usize, usize>], s: usize, t: usize) -> usize {
+    let mut linked_arcs: Vec<Vec<usize>> = vec![Vec::new(); graph.len()];
+    let mut capacity: Vec<HashMap<usize, i64>> = vec![HashMap::new(); graph.len()];
+    let mut flow: Vec<HashMap<usize, i64>> = vec![HashMap::new(); graph.len()];
+    for (u, edges) in graph.iter().enumerate() {
+        for (&v, &w) in edges.iter() {
+            linked_arcs[u].push(v);
+            capacity[u].insert(v, w as i64);
+            flow[u].insert(v, 0);
+            if !graph[v].contains_key(&u) {
                 linked_arcs[v].push(u);
+                capacity[v].insert(u, 0);
+                flow[v].insert(u, 0);
             }
         }
-        FlowGraph {
-            capacity: capacity_graph,
-            flow: empty_flow,
-            labels: vec![0; graph.len()],
-            excess: vec![0; graph.len()],
-            linked_arcs,
-            current_arc: vec![0; graph.len()],
-        }
     }
-
-    fn admissible_flow(&self, u: usize, v: usize) -> i64 {
-        if self.labels[u] <= self.labels[v] {
-            0
-        } else {
-            std::cmp::min(self.excess[u], self.capacity[u][&v] - self.flow[u][&v])
-        }
+    let mut current_arc = vec![0usize; graph.len()];
+    let mut labels = vec![0usize; graph.len()];
+    let mut excess = vec![0i64; graph.len()];
+    let mut queue: VecDeque<usize> = VecDeque::new();
+    let mut queue_set: HashSet<usize> = HashSet::new();
+    labels[s] = graph.len();
+    queue_set.insert(s);
+    queue_set.insert(t);
+    for &v in linked_arcs[s].iter() {
+        let admissible_flow = capacity[s].get(&v).unwrap();
+        *flow[s].get_mut(&v).unwrap() += admissible_flow;
+        *flow[v].get_mut(&s).unwrap() -= admissible_flow;
+        excess[v] += admissible_flow;
+        queue.push_back(v);
+        queue_set.insert(v);
     }
-
-    fn push(&mut self, u: usize, v: usize) -> bool {
-        let f = self.admissible_flow(u, v);
-        self.excess[u] -= f;
-        self.excess[v] += f;
-        *self.flow[u].get_mut(&v).expect("link") += f;
-        *self.flow[v].get_mut(&u).expect("link") -= f;
-        f > 0
-    }
-
-    fn relabel(&mut self, u: usize) {
-        self.labels[u] = 1 + self.linked_arcs[u]
-            .iter()
-            .map(|&v| {
-                if self.capacity[u][&v] - self.flow[u][&v] > 0 {
-                    self.labels[v]
-                } else {
-                    usize::MAX
-                }
-            })
-            .reduce(std::cmp::min)
-            .expect("non-empty");
-    }
-
-    fn discharge(&mut self, u: usize, queue: &mut VecDeque<usize>, queue_set: &mut HashSet<usize>) {
-        while self.excess[u] > 0 {
-            while self.current_arc[u] < self.linked_arcs[u].len() {
-                let v = self.linked_arcs[u][self.current_arc[u]];
-                if self.push(u, v) && !queue_set.contains(&v) {
+    while let Some(u) = queue.pop_front() {
+        while excess[u] > 0 {
+            if current_arc[u] == linked_arcs[u].len() {
+                current_arc[u] = 0;
+                labels[u] = 1 + linked_arcs[u]
+                    .iter()
+                    .map(|&v| labels[v])
+                    .filter(|&l| labels[u] <= l)
+                    .reduce(std::cmp::min)
+                    .unwrap();
+            }
+            let v = linked_arcs[u][current_arc[u]];
+            if labels[u] <= labels[v] {
+                current_arc[u] += 1;
+                continue;
+            }
+            if capacity[u][&v] > flow[u][&v] {
+                let admissible_flow = std::cmp::min(excess[u], capacity[u][&v] - flow[u][&v]);
+                *flow[u].get_mut(&v).unwrap() += admissible_flow;
+                *flow[v].get_mut(&u).unwrap() -= admissible_flow;
+                excess[u] -= admissible_flow;
+                excess[v] += admissible_flow;
+                if !queue_set.contains(&v) {
                     queue.push_back(v);
                     queue_set.insert(v);
                 }
-                if self.admissible_flow(u, v) == 0 {
-                    self.current_arc[u] += 1;
-                }
             }
-            self.current_arc[u] = 0;
-            self.relabel(u)
+            if capacity[u][&v] == flow[u][&v] {
+                current_arc[u] += 1;
+            }
         }
-    }
-}
-
-pub fn maximum_flow(graph: &[HashMap<usize, usize>], s: usize, t: usize) -> usize {
-    let mut queue: VecDeque<usize> = VecDeque::new();
-    let mut queue_set: HashSet<usize> = HashSet::new();
-    let mut flow_graph = FlowGraph::new(
-        graph
-            .iter()
-            .map(|m| {
-                m.iter()
-                    .map(|(&k, &v)| (k, v as i64))
-                    .collect::<HashMap<usize, i64>>()
-            })
-            .collect::<Vec<HashMap<usize, i64>>>(),
-    );
-    flow_graph.labels[s] = graph.len();
-    flow_graph.excess[s] = i64::MAX;
-    queue_set.insert(s);
-    queue_set.insert(t);
-    while flow_graph.current_arc[s] < flow_graph.linked_arcs[s].len() {
-        let v = flow_graph.linked_arcs[s][flow_graph.current_arc[s]];
-        if flow_graph.push(s, v) {
-            queue.push_back(v);
-            queue_set.insert(v);
-        }
-        flow_graph.current_arc[s] += 1;
-        flow_graph.excess[s] = i64::MAX;
-    }
-    while let Some(u) = queue.pop_front() {
         queue_set.remove(&u);
-        flow_graph.discharge(u, &mut queue, &mut queue_set);
     }
-    flow_graph.excess[t] as usize
+    excess[t] as usize
 }
