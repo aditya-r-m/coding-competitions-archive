@@ -82,11 +82,16 @@ impl FlowGraph {
         }
     }
 
-    fn push(&mut self, u: usize, v: usize) -> bool {
+    fn admissible_flow(&self, u: usize, v: usize) -> i64 {
         if self.labels[u] <= self.labels[v] {
-            return false;
+            0
+        } else {
+            std::cmp::min(self.excess[u], self.capacity[u][&v] - self.flow[u][&v])
         }
-        let f = std::cmp::min(self.excess[u], self.capacity[u][&v] - self.flow[u][&v]);
+    }
+
+    fn push(&mut self, u: usize, v: usize) -> bool {
+        let f = self.admissible_flow(u, v);
         self.excess[u] -= f;
         self.excess[v] += f;
         *self.flow[u].get_mut(&v).expect("link") += f;
@@ -116,7 +121,9 @@ impl FlowGraph {
                     queue.push_back(v);
                     queue_set.insert(v);
                 }
-                self.current_arc[u] += 1;
+                if self.admissible_flow(u, v) == 0 {
+                    self.current_arc[u] += 1;
+                }
             }
             self.current_arc[u] = 0;
             self.relabel(u)
