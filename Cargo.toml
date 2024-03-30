@@ -40,6 +40,10 @@ name = "what_are_birds"
 path = "codejam/2008/apac_semifinal/what_are_birds/solution.rs"
 
 [[bin]]
+name = "bus_stops"
+path = "codejam/2008/emea_semifinal/bus_stops/solution.rs"
+
+[[bin]]
 name = "fly_swatter"
 path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
 
