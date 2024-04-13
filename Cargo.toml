@@ -48,6 +48,10 @@ name = "painting_a_fence"
 path = "codejam/2008/emea_semifinal/painting_a_fence/solution.rs"
 
 [[bin]]
+name = "rainbow_trees"
+path = "codejam/2008/emea_semifinal/rainbow_trees/solution.rs"
+
+[[bin]]
 name = "fly_swatter"
 path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
 
