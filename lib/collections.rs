@@ -98,6 +98,12 @@ pub trait AddIdentity {
     fn add_identity(&self) -> Self;
 }
 
+impl AddIdentity for f64 {
+    fn add_identity(&self) -> Self {
+        0.
+    }
+}
+
 impl AddIdentity for ModInt {
     fn add_identity(&self) -> Self {
         ModInt::new(0, self.m)
@@ -106,6 +112,12 @@ impl AddIdentity for ModInt {
 
 pub trait MulIdentity {
     fn mul_identity(&self) -> Self;
+}
+
+impl MulIdentity for f64 {
+    fn mul_identity(&self) -> Self {
+        1.
+    }
 }
 
 impl MulIdentity for ModInt {
@@ -146,6 +158,23 @@ where
             }
         }
         SquareMatrix { rows, n: self.n }
+    }
+}
+
+impl<T> Mul<Vec<T>> for SquareMatrix<T>
+where
+    T: Add<Output = T> + Mul<Output = T> + AddIdentity + Copy,
+{
+    type Output = Vec<T>;
+    fn mul(self, rhs: Vec<T>) -> Vec<T> {
+        assert!(self.n == rhs.len());
+        let mut result = vec![self.rows[0][0].add_identity(); self.n];
+        for i in 0..self.n {
+            for j in 0..self.n {
+                result[i] = result[i] + self.rows[i][j] * rhs[j];
+            }
+        }
+        result
     }
 }
 

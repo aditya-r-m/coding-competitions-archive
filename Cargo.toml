@@ -52,6 +52,10 @@ name = "rainbow_trees"
 path = "codejam/2008/emea_semifinal/rainbow_trees/solution.rs"
 
 [[bin]]
+name = "scaled_triangle"
+path = "codejam/2008/emea_semifinal/scaled_triangle/solution.rs"
+
+[[bin]]
 name = "fly_swatter"
 path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
 
