@@ -134,3 +134,7 @@ path = "codejam/2008/round_3/no_cheating/solution.rs"
 [[bin]]
 name = "portal"
 path = "codejam/2008/round_3/portal/solution.rs"
+
+[[bin]]
+name = "bridge_builders"
+path = "codejam/2008/world_finals/bridge_builders/solution.rs"
