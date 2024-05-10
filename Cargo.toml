@@ -146,3 +146,7 @@ path = "codejam/2008/world_finals/juice/solution.rs"
 [[bin]]
 name = "mine_layer"
 path = "codejam/2008/world_finals/mine_layer/solution.rs"
+
+[[bin]]
+name = "ping_pong_balls"
+path = "codejam/2008/world_finals/ping_pong_balls/solution.rs"
