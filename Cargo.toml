@@ -154,3 +154,7 @@ path = "codejam/2008/world_finals/ping_pong_balls/solution.rs"
 [[bin]]
 name = "the_year_of_code_jam"
 path = "codejam/2008/world_finals/the_year_of_code_jam/solution.rs"
+
+[[bin]]
+name = "alien_language"
+path = "codejam/2009/qualification_round/alien_language/solution.rs"
