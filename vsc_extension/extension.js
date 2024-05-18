@@ -1,23 +1,41 @@
 const vscode = require('vscode');
 const cp = require('child_process')
 
-function trimPath(path) {
-	let trimmedPath = path.replace('problem.yaml', '').replace('solution.rs', '').replace(/data\/secret.*/, '');
-	if (path === trimmedPath) throw 'File selection not recognized';
+function getPath() {
+	let path;
+	try {
+		path = vscode.window.activeTextEditor.document.uri.path || '';
+	} catch {
+		path = '';
+	}
+	let trimmedPath = path
+		.replace('problem.yaml', '')
+		.replace(/solution\..*/, '')
+		.replace(/problem_statement.*/, '')
+		.replace(/data\/secret.*/, '');
+	if (path === trimmedPath) {
+		if (!vscode.window.previousCCAPath) {
+			throw 'File selection not recognized';
+		} else {
+			trimmedPath = vscode.window.previousCCAPath;
+		}
+	} else {
+		vscode.window.previousCCAPath = trimmedPath;
+	}
 	return trimmedPath;
 }
 
 function activate(context) {
 	let openStatement = vscode.commands.registerCommand('cca.view.statement', () => {
-		renderWebview(trimPath(vscode.window.activeTextEditor.document.uri.path) + 'statement.pdf');
+		renderWebview(getPath() + 'statement.pdf');
 	});
 	context.subscriptions.push(openStatement);
 	let openAnalysis = vscode.commands.registerCommand('cca.view.analysis', () => {
-		renderWebview(trimPath(vscode.window.activeTextEditor.document.uri.path) + 'analysis.pdf');
+		renderWebview(getPath() + 'analysis.pdf');
 	});
 	context.subscriptions.push(openAnalysis);
 	let createSolution = vscode.commands.registerCommand('cca.create', () => {
-		let solutionPath = trimPath(vscode.window.activeTextEditor.document.uri.path) + 'solution.rs';
+		let solutionPath = getPath() + 'solution.rs';
 		let solutionName = solutionPath.replace('/solution.rs', '').split('/').pop();
 		let configPath = solutionPath.split('coding-competitions-archive')[0] + 'coding-competitions-archive/Cargo.toml'
 		cp.exec(`
@@ -27,7 +45,7 @@ function activate(context) {
 	});
 	context.subscriptions.push(createSolution);
 	let editSmallTestSet = vscode.commands.registerCommand('cca.edit_small_test_set', () => {
-		cp.exec(`codium -r ${trimPath(vscode.window.activeTextEditor.document.uri.path) + 'data/secret/subtask1/1.in'}`);
+		cp.exec(`codium -r ${getPath() + 'data/secret/subtask1/1.in'}`);
 	});
 	context.subscriptions.push(editSmallTestSet);
 	let runSmallTestSet = vscode.commands.registerCommand('cca.run_small_test_set', () => {
@@ -73,7 +91,7 @@ function renderWebview(pdfPath) {
 }
 
 function runTestSet(testSet) {
-	let solutionPath = trimPath(vscode.window.activeTextEditor.document.uri.path) + 'solution.rs';
+	let solutionPath = getPath() + 'solution.rs';
 	let solutionName = solutionPath.replace('/solution.rs', '').split('/').pop();
 	let rootPath = solutionPath.split('coding-competitions-archive')[0] + 'coding-competitions-archive';
 	let smallTestSetPath = solutionPath.replace(/[a-z\.]+$/, `data/secret/${testSet}/1.in`);
