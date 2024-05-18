@@ -53,9 +53,9 @@ function renderWebview(pdfPath) {
 	});
 	cp.exec(`
 			mkdir ${outputPrefix}
-			pdftoppm ${pdfPath} ${outputPrefix}raw -png
-			convert ${outputPrefix}raw-*.png -colorspace Gray +level-colors "#bbbbbb","#22272e" ${outputPrefix}dark.png
-			convert -append ${outputPrefix}dark-*png ${outputPrefix}dark.png
+			pdftoppm -x 64 -y 64 ${pdfPath} ${outputPrefix}raw -png
+			convert ${outputPrefix}raw-*.png -colorspace Gray +level-colors "#dddddd","#22272e" ${outputPrefix}dark.png
+			convert +append ${outputPrefix}dark-*png ${outputPrefix}dark.png
 			base64 ${outputPrefix}dark.png
 		`, { maxBuffer: 1024 * 1024 * 20 }, (_, stdout, __) => {
 		panel.webview.html = `
@@ -66,9 +66,7 @@ function renderWebview(pdfPath) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		</head>
 		<body>
-		<div style="margin: auto; width: 900px;">
-			<img src="data:image/png;base64,${stdout}"></img>
-		</div>
+		<img style="height: 1080px; max-width: none;" src="data:image/png;base64,${stdout}"></img>
 		</body>
 		</html>`;
 	});
