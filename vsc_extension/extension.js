@@ -71,7 +71,7 @@ function renderWebview(pdfPath) {
 	});
 	cp.exec(`
 			mkdir ${outputPrefix}
-			pdftoppm -x 64 -y 64 ${pdfPath} ${outputPrefix}raw -png
+			pdftoppm ${pdfPath} ${outputPrefix}raw -png
 			convert ${outputPrefix}raw-*.png -colorspace Gray +level-colors "#dddddd","#22272e" ${outputPrefix}dark.png
 			convert +append ${outputPrefix}dark-*png ${outputPrefix}dark.png
 			base64 ${outputPrefix}dark.png
