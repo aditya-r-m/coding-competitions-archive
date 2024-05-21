@@ -215,6 +215,9 @@ impl DisjointSet {
     pub fn union(&mut self, u_: usize, v_: usize) {
         let u = self.get_root(u_);
         let v = self.get_root(v_);
+        if u == v {
+            return;
+        }
         if self.ranks[u] > self.ranks[v] {
             self.links[v] = u;
             return;

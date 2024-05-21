@@ -52,7 +52,9 @@ macro_rules! run {
             for test_case_index in 1..1 + test_case_count {
                 print!(
                     "{}",
-                    format!("Case #{test_case_index}: {}\n", solve(read())).replace(" \n", "\n")
+                    format!("Case #{test_case_index}: {}\n", solve(read()))
+                        .replace(" \n", "\n")
+                        .replace(" \u{8}", "")
                 );
             }
         }
