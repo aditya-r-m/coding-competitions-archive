@@ -7,7 +7,7 @@ The VSC-extension provides convenience commands in for the following,
 Package & Install the vsix file locally,
 ```
 vsce package
-codium --install-extension coding-competitions-archive-1.0.0.vsix
+code --install-extension coding-competitions-archive-1.0.0.vsix
 ```
 
 
@@ -24,4 +24,3 @@ curl https://sh.rustup.rs -sSf | bash -s -- -y
 rustup component add rust-analyzer # for rust-analyzer extension
 ```
 
-If you use VS-code, please edit the `codium` commands in `extension.js` with `code`.

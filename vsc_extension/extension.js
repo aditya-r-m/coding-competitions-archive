@@ -45,7 +45,7 @@ function activate(context) {
 	});
 	context.subscriptions.push(createSolution);
 	let editSmallTestSet = vscode.commands.registerCommand('cca.edit_small_test_set', () => {
-		cp.exec(`codium -r ${getPath() + 'data/secret/subtask1/1.in'}`);
+		cp.exec(`code -r ${getPath() + 'data/secret/subtask1/1.in'}`);
 	});
 	context.subscriptions.push(editSmallTestSet);
 	let runSmallTestSet = vscode.commands.registerCommand('cca.run_small_test_set', () => {
@@ -96,7 +96,7 @@ function runTestSet(testSet) {
 	let rootPath = solutionPath.split('coding-competitions-archive')[0] + 'coding-competitions-archive';
 	let smallTestSetPath = solutionPath.replace(/[a-z\.]+$/, `data/secret/${testSet}/1.in`);
 	let outputPath = solutionPath.replace(/[a-z\.]+$/, `data/secret/${testSet}/1.ans`);
-	cp.exec(`touch ${outputPath} && codium -r ${outputPath}`, () => {
+	cp.exec(`touch ${outputPath} && code -r ${outputPath}`, () => {
 		cp.exec(`
 			cd ${rootPath} &&
 			cargo build --release --bin ${solutionName} 2> ${outputPath} &&
