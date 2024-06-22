@@ -166,3 +166,7 @@ path = "codejam/2009/qualification_round/watersheds/solution.rs"
 [[bin]]
 name = "welcome_to_code_jam"
 path = "codejam/2009/qualification_round/welcome_to_code_jam/solution.rs"
+
+[[bin]]
+name = "collecting_cards"
+path = "codejam/2009/round_1a/collecting_cards/solution.rs"
