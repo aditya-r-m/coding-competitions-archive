@@ -179,3 +179,7 @@ path = "codejam/2009/round_1a/crossing_the_road/solution.rs"
 name = "multi-base_happiness"
 path = "codejam/2009/round_1a/multi-base_happiness/solution.rs"
 
+[[bin]]
+name = "decision_tree"
+path = "codejam/2009/round_1b/decision_tree/solution.rs"
+
