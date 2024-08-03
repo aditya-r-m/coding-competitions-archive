@@ -191,3 +191,7 @@ path = "codejam/2009/round_1b/square_math/solution.rs"
 name = "the_next_number"
 path = "codejam/2009/round_1b/the_next_number/solution.rs"
 
+[[bin]]
+name = "all_your_base"
+path = "codejam/2009/round_1c/all_your_base/solution.rs"
+
