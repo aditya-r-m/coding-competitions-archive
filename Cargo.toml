@@ -203,3 +203,7 @@ path = "codejam/2009/round_1c/bribe_the_prisoners/solution.rs"
 name = "center_of_mass"
 path = "codejam/2009/round_1c/center_of_mass/solution.rs"
 
+[[bin]]
+name = "a_digging_problem"
+path = "codejam/2009/round_2/a_digging_problem/solution.rs"
+
