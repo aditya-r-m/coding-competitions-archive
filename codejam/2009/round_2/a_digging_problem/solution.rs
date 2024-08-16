@@ -4,12 +4,12 @@ lib::run!();
 
 fn read() -> (Vec<Vec<bool>>, usize) {
     let mut grid: Vec<Vec<bool>> = Vec::new();
-    lib::input!([usize; 3] as [r, _, fall_limit]);
+    lib::input!([usize; 3] as [r, _, total_health_points]);
     for _ in 0..r {
         lib::input!(Vec<char> as row);
         grid.push(row.into_iter().map(|c| c == '#').collect::<Vec<bool>>());
     }
-    (grid, fall_limit)
+    (grid, total_health_points)
 }
 
 fn solve((mut grid, total_health_points): (Vec<Vec<bool>>, usize)) -> String {
@@ -61,7 +61,7 @@ fn solve((mut grid, total_health_points): (Vec<Vec<bool>>, usize)) -> String {
             ));
         }
         for nxt_c in platform_start..platform_end {
-            for nxt_dug_range in platform_start as isize - nxt_c as isize..=0 {
+            for nxt_dug_range in platform_start as isize - nxt_c as isize..=0isize {
                 queue.push((
                     score + nxt_dug_range - 1isize,
                     (r + 1, nxt_c),
@@ -72,7 +72,7 @@ fn solve((mut grid, total_health_points): (Vec<Vec<bool>>, usize)) -> String {
         for nxt_c in platform_start + 1..=platform_end {
             for nxt_dug_range in 0isize..=platform_end as isize - nxt_c as isize {
                 queue.push((
-                    score - nxt_dug_range - 1 as isize,
+                    score - nxt_dug_range - 1isize,
                     (r + 1, nxt_c),
                     (nxt_dug_range, total_health_points - 1),
                 ));

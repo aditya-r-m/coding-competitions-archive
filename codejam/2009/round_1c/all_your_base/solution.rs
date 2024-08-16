@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 lib::run!();
 
 fn read() -> Vec<char> {
@@ -8,8 +10,7 @@ fn read() -> Vec<char> {
 fn solve(number: Vec<char>) -> String {
     let mut base = 2;
     let mut cloned_number = number.clone();
-    let mut digit_value_map: std::collections::HashMap<char, usize> =
-        std::collections::HashMap::new();
+    let mut digit_value_map: HashMap<char, usize> = HashMap::new();
     cloned_number.dedup();
     digit_value_map.insert(cloned_number[0], 1);
     if cloned_number.len() > 1 {
