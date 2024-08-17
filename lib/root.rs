@@ -10,7 +10,7 @@ macro_rules! input {
     };
     (Vec<char> as $out:ident) => {
         lib::input!(buffer);
-        let $out = buffer.trim().chars().collect::<Vec<char>>();
+        let mut $out = buffer.trim().chars().collect::<Vec<char>>();
     };
     (Vec<$type:ty> as $out:ident) => {
         lib::input!(buffer);
