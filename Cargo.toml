@@ -215,3 +215,7 @@ path = "codejam/2009/round_2/crazy_rows/solution.rs"
 name = "stock_charts"
 path = "codejam/2009/round_2/stock_charts/solution.rs"
 
+[[bin]]
+name = "watering_plants"
+path = "codejam/2009/round_2/watering_plants/solution.rs"
+
