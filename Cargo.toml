@@ -219,3 +219,7 @@ path = "codejam/2009/round_2/stock_charts/solution.rs"
 name = "watering_plants"
 path = "codejam/2009/round_2/watering_plants/solution.rs"
 
+[[bin]]
+name = "alphabetomials"
+path = "codejam/2009/round_3/alphabetomials/solution.rs"
+
