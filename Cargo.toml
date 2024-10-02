@@ -223,3 +223,7 @@ path = "codejam/2009/round_2/watering_plants/solution.rs"
 name = "alphabetomials"
 path = "codejam/2009/round_3/alphabetomials/solution.rs"
 
+[[bin]]
+name = "ez-sokoban"
+path = "codejam/2009/round_3/ez-sokoban/solution.rs"
+
