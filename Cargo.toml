@@ -227,3 +227,7 @@ path = "codejam/2009/round_3/alphabetomials/solution.rs"
 name = "ez-sokoban"
 path = "codejam/2009/round_3/ez-sokoban/solution.rs"
 
+[[bin]]
+name = "football_team"
+path = "codejam/2009/round_3/football_team/solution.rs"
+
