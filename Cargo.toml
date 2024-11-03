@@ -231,3 +231,7 @@ path = "codejam/2009/round_3/ez-sokoban/solution.rs"
 name = "football_team"
 path = "codejam/2009/round_3/football_team/solution.rs"
 
+[[bin]]
+name = "interesting_ranges"
+path = "codejam/2009/round_3/interesting_ranges/solution.rs"
+
