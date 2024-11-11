@@ -235,3 +235,7 @@ path = "codejam/2009/round_3/football_team/solution.rs"
 name = "interesting_ranges"
 path = "codejam/2009/round_3/interesting_ranges/solution.rs"
 
+[[bin]]
+name = "doubly-sorted_grid"
+path = "codejam/2009/world_finals/doubly-sorted_grid/solution.rs"
+
