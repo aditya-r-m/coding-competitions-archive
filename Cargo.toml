@@ -250,3 +250,7 @@ path = "codejam/2009/world_finals/marbles/solution.rs"
 [[bin]]
 name = "min_perimeter"
 path = "codejam/2009/world_finals/min_perimeter/solution.rs"
+
+[[bin]]
+name = "wi-fi_towers"
+path = "codejam/2009/world_finals/wi-fi_towers/solution.rs"
