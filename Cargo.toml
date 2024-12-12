@@ -254,3 +254,7 @@ path = "codejam/2009/world_finals/min_perimeter/solution.rs"
 [[bin]]
 name = "wi-fi_towers"
 path = "codejam/2009/world_finals/wi-fi_towers/solution.rs"
+
+[[bin]]
+name = "year_of_more_code_jam"
+path = "codejam/2009/world_finals/year_of_more_code_jam/solution.rs"
