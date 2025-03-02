@@ -20,7 +20,7 @@ There is no plan to add data for problems for other contests (like Code Jam for 
 
 Code Jam Solution are implemented in Rust for problem-sets from 2008,9 timeframe, and in Python for the problem-sets that follow.
 
-The following convenience commands can be used to create a tmux based IDE setup with shortcuts such as `Ctrl+b 1` to test the solution implementations against the provided answers,
+Convenience scripts such as the following can be used to create a [tmux](https://github.com/tmux/tmux)+[helix](https://github.com/helix-editor/helix) based IDE setup,
 
 ```
 alias sd='cd $(find * -type d | fzf)'
@@ -32,4 +32,11 @@ function rn() {
     fi
 }
 alias tx='tmux new-session \; set -s escape-time 0 \; split-window -h -l 150 \; set -g status off \; bind-key 1 send-keys -t 0 "rn 1" Enter \; bind-key 2 send-keys -t 0 "rn 2" Enter \; attach'
+alias xp='hx solution.py'
 ```
+
+The above script includes the following
+  - `sd` for navigating repository
+  - `tx` to start tmux split-pane session for code execution and editor views
+  - `xp` to start helix editor for solution.py
+  - `Ctrl+b 1`,`Ctrl+b 2` to test the solution implementations against the provided answers
