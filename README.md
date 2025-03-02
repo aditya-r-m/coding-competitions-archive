@@ -18,7 +18,7 @@ There is no plan to add data for problems for other contests (like Code Jam for 
 
 ## Solutions
 
-Code Jam Solution are implemented in Rust for problem-sets from 2008,9 timeframe, and in Python for the problem-sets that follow.
+Code Jam Solutions are implemented in Rust for problem-sets from 2008,9 timeframe, and in Python for the problem-sets that follow.
 
 Convenience scripts such as the following can be used to create a [tmux](https://github.com/tmux/tmux)+[helix](https://github.com/helix-editor/helix) based IDE setup,
 
