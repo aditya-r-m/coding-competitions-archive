@@ -1,4 +1,4 @@
-def read() -> [(int, int)]:
+def read() -> list[tuple[int, int]]:
     coordinates = []
     n = int(input())
     for _ in range(n):
@@ -6,7 +6,7 @@ def read() -> [(int, int)]:
         coordinates.append((x, y))
     return coordinates
 
-def count_inversions_and_sort(permutation: [int]) -> int:
+def count_inversions_and_sort(permutation: list[int]) -> int:
     if len(permutation) < 2: return 0
     left_permutation, right_permutation = permutation[:len(permutation)>>1], permutation[len(permutation)>>1:]
     left_index = right_index = 0
@@ -25,7 +25,7 @@ def count_inversions_and_sort(permutation: [int]) -> int:
             inversion_count += len(left_permutation) - left_index
     return inversion_count
 
-def solve(coordinates: [(int, int)]) -> int:
+def solve(coordinates: list[tuple[int, int]]) -> int:
     return count_inversions_and_sort([y for (_, y) in sorted(coordinates)])
 
 test_case_count = int(input())

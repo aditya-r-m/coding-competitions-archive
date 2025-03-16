@@ -1,6 +1,6 @@
 from math import sqrt
 
-def read() -> (int, int, int):
+def read() -> tuple[int, int, int]:
     l, p, c = map(int, input().split())
     return (l, p, c)
 

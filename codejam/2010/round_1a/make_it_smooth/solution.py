@@ -2,7 +2,7 @@ from collections import deque
 from math import inf
 
 class SlidingWindow:
-    def __init__(self, values: [int]):
+    def __init__(self, values: list[int]):
         self.len = len(values)
         if not self.len: return
         self.deque = deque()
@@ -29,12 +29,12 @@ class SlidingWindow:
 
 limit_value = 256
 
-def read() -> (int, int, int, [int]):
+def read() -> tuple[int, int, int, list[int]]:
     cost_deletion, cost_insertion, window_len, _ = map(int, input().split())
     values = list(map(int, input().split()))
     return cost_deletion, cost_insertion, window_len, values
 
-def solve(cost_deletion: int, cost_insertion: int, window_len: int, values: [int]) -> int:
+def solve(cost_deletion: int, cost_insertion: int, window_len: int, values: list[int]) -> int:
     cache = [0] * limit_value
     for value in values:
         next_cache = list(map(lambda x: x + cost_deletion, cache))

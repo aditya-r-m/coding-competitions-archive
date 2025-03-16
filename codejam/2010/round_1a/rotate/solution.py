@@ -1,9 +1,9 @@
-def read() -> (int, int, [[str]]):
+def read() -> tuple[int, int, list[list[str]]]:
     (n, k), grid = map(int, input().split()), []
     for _ in range(n): grid.append(list(input().strip()))
     return (n, k, grid)
 
-def solve(n: int, k: int, grid: [[str]]) -> str:
+def solve(n: int, k: int, grid: list[list[str]]) -> str:
     red_wins, blue_wins = False, False
     for row in grid:
         j = 0

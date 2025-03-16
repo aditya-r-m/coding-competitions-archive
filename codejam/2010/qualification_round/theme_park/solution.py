@@ -1,9 +1,9 @@
-def read() -> (int, int, [int]):
+def read() -> tuple[int, int, list[int]]:
     len_runs, capacity, _ = map(int, input().split())
     groups = list(map(int, input().split()))
     return (len_runs, capacity, groups)
 
-def solve(len_runs: int, capacity: int, groups: [int]) -> int:
+def solve(len_runs: int, capacity: int, groups: list[int]) -> int:
     score, current_group, cache = 0, 0, dict()
     while len_runs:
         current_score, previous_group = 0, current_group

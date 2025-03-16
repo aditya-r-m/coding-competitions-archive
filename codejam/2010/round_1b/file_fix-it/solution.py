@@ -1,11 +1,11 @@
-def read() -> ([str], [str]):
+def read() -> tuple[list[str], list[str]]:
     c, n = list(map(int, input().split()))
     current_paths, required_paths = [], []
     for _ in range(c): current_paths.append(input())
     for _ in range(n): required_paths.append(input())
     return (current_paths, required_paths)
 
-def solve(current_paths: [str], required_paths: [str]) -> int:
+def solve(current_paths: list[str], required_paths: list[str]) -> int:
     count_commands_required, command_required, root = 0, 0, { '': dict() }
     for paths in [current_paths, required_paths]:
         for current_path in paths:

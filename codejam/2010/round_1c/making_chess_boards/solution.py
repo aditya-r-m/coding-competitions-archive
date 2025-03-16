@@ -1,7 +1,7 @@
 from collections import defaultdict
 from heapq import heappush, heappop
 
-def read() -> [[bool]]:
+def read() -> list[list[bool]]:
     grid = []
     m, _ = map(int, input().split())
     for _ in range(m):
@@ -9,7 +9,7 @@ def read() -> [[bool]]:
         for c in input(): grid[-1] += map(int, bin(int(c, 16))[2:].zfill(4))
     return grid
 
-def solve(grid) -> str:
+def solve(grid: list[list[bool]]) -> str:
     result_map = defaultdict(lambda: 0)
     m, n = len(grid), len(grid[0])
     chessboard_max_len = [[1] * n for _ in range(m)]

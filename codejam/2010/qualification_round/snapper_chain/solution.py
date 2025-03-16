@@ -1,4 +1,4 @@
-def read() -> (int, int):
+def read() -> tuple[int, int]:
     return map(int, input().split())
 
 def solve(n: int, k: int) -> str:

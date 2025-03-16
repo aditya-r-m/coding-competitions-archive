@@ -1,4 +1,4 @@
-def read() -> (int, int, int, [int], [int]):
+def read() -> tuple[int, int, int, list[int], list[int]]:
     count_total, count_required, limit_distance, limit_time = list(map(int, input().split()))
     starting_points = list(map(int, input().split()))
     velocities = list(map(int, input().split()))
@@ -9,8 +9,8 @@ def solve(
     count_required: int,
     limit_distance: int,
     limit_time: int,
-    starting_points: [int],
-    velocities: [int]
+    starting_points: list[int],
+    velocities: list[int]
 ) -> str:
     count_crossed, index_current, swaps_performed = 0, count_total - 1, 0
     while count_required > count_crossed and index_current + 1:
