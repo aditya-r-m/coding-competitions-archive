@@ -1,0 +1,260 @@
+[package]
+name = "solutions"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "lib"
+path = "lib/root.rs"
+
+[[bin]]
+name = "code_sequence"
+path = "codejam/2008/amer_semifinal/code_sequence/solution.rs"
+
+[[bin]]
+name = "king"
+path = "codejam/2008/amer_semifinal/king/solution.rs"
+
+[[bin]]
+name = "mixing_bowls"
+path = "codejam/2008/amer_semifinal/mixing_bowls/solution.rs"
+
+[[bin]]
+name = "test_passing_probability"
+path = "codejam/2008/amer_semifinal/test_passing_probability/solution.rs"
+
+[[bin]]
+name = "apocalypse_soon"
+path = "codejam/2008/apac_semifinal/apocalypse_soon/solution.rs"
+
+[[bin]]
+name = "millionaire"
+path = "codejam/2008/apac_semifinal/millionaire/solution.rs"
+
+[[bin]]
+name = "modern_art_plagiarism"
+path = "codejam/2008/apac_semifinal/modern_art_plagiarism/solution.rs"
+
+[[bin]]
+name = "what_are_birds"
+path = "codejam/2008/apac_semifinal/what_are_birds/solution.rs"
+
+[[bin]]
+name = "bus_stops"
+path = "codejam/2008/emea_semifinal/bus_stops/solution.rs"
+
+[[bin]]
+name = "painting_a_fence"
+path = "codejam/2008/emea_semifinal/painting_a_fence/solution.rs"
+
+[[bin]]
+name = "rainbow_trees"
+path = "codejam/2008/emea_semifinal/rainbow_trees/solution.rs"
+
+[[bin]]
+name = "scaled_triangle"
+path = "codejam/2008/emea_semifinal/scaled_triangle/solution.rs"
+
+[[bin]]
+name = "fly_swatter"
+path = "codejam/2008/qualification_round/fly_swatter/solution.rs"
+
+[[bin]]
+name = "saving_the_universe"
+path = "codejam/2008/qualification_round/saving_the_universe/solution.rs"
+
+[[bin]]
+name = "train_timetable"
+path = "codejam/2008/qualification_round/train_timetable/solution.rs"
+
+[[bin]]
+name = "milkshakes"
+path = "codejam/2008/round_1a/milkshakes/solution.rs"
+
+[[bin]]
+name = "minimum_scalar_product"
+path = "codejam/2008/round_1a/minimum_scalar_product/solution.rs"
+
+[[bin]]
+name = "numbers"
+path = "codejam/2008/round_1a/numbers/solution.rs"
+
+[[bin]]
+name = "crop_triangles"
+path = "codejam/2008/round_1b/crop_triangles/solution.rs"
+
+[[bin]]
+name = "mousetrap"
+path = "codejam/2008/round_1b/mousetrap/solution.rs"
+
+[[bin]]
+name = "number_sets"
+path = "codejam/2008/round_1b/number_sets/solution.rs"
+
+[[bin]]
+name = "increasing_speed_limits"
+path = "codejam/2008/round_1c/increasing_speed_limits/solution.rs"
+
+[[bin]]
+name = "text_messaging_outrage"
+path = "codejam/2008/round_1c/text_messaging_outrage/solution.rs"
+
+[[bin]]
+name = "ugly_numbers"
+path = "codejam/2008/round_1c/ugly_numbers/solution.rs"
+
+[[bin]]
+name = "cheating_a_boolean_tree"
+path = "codejam/2008/round_2/cheating_a_boolean_tree/solution.rs"
+
+[[bin]]
+name = "permrle"
+path = "codejam/2008/round_2/permrle/solution.rs"
+
+[[bin]]
+name = "star_wars"
+path = "codejam/2008/round_2/star_wars/solution.rs"
+
+[[bin]]
+name = "triangle_areas"
+path = "codejam/2008/round_2/triangle_areas/solution.rs"
+
+[[bin]]
+name = "endless_knight"
+path = "codejam/2008/round_3/endless_knight/solution.rs"
+
+[[bin]]
+name = "how_big_are_the_pockets"
+path = "codejam/2008/round_3/how_big_are_the_pockets/solution.rs"
+
+[[bin]]
+name = "no_cheating"
+path = "codejam/2008/round_3/no_cheating/solution.rs"
+
+[[bin]]
+name = "portal"
+path = "codejam/2008/round_3/portal/solution.rs"
+
+[[bin]]
+name = "bridge_builders"
+path = "codejam/2008/world_finals/bridge_builders/solution.rs"
+
+[[bin]]
+name = "juice"
+path = "codejam/2008/world_finals/juice/solution.rs"
+
+[[bin]]
+name = "mine_layer"
+path = "codejam/2008/world_finals/mine_layer/solution.rs"
+
+[[bin]]
+name = "ping_pong_balls"
+path = "codejam/2008/world_finals/ping_pong_balls/solution.rs"
+
+[[bin]]
+name = "the_year_of_code_jam"
+path = "codejam/2008/world_finals/the_year_of_code_jam/solution.rs"
+
+[[bin]]
+name = "alien_language"
+path = "codejam/2009/qualification_round/alien_language/solution.rs"
+
+[[bin]]
+name = "watersheds"
+path = "codejam/2009/qualification_round/watersheds/solution.rs"
+
+[[bin]]
+name = "welcome_to_code_jam"
+path = "codejam/2009/qualification_round/welcome_to_code_jam/solution.rs"
+
+[[bin]]
+name = "collecting_cards"
+path = "codejam/2009/round_1a/collecting_cards/solution.rs"
+
+[[bin]]
+name = "crossing_the_road"
+path = "codejam/2009/round_1a/crossing_the_road/solution.rs"
+
+[[bin]]
+name = "multi-base_happiness"
+path = "codejam/2009/round_1a/multi-base_happiness/solution.rs"
+
+[[bin]]
+name = "decision_tree"
+path = "codejam/2009/round_1b/decision_tree/solution.rs"
+
+[[bin]]
+name = "square_math"
+path = "codejam/2009/round_1b/square_math/solution.rs"
+
+[[bin]]
+name = "the_next_number"
+path = "codejam/2009/round_1b/the_next_number/solution.rs"
+
+[[bin]]
+name = "all_your_base"
+path = "codejam/2009/round_1c/all_your_base/solution.rs"
+
+[[bin]]
+name = "bribe_the_prisoners"
+path = "codejam/2009/round_1c/bribe_the_prisoners/solution.rs"
+
+[[bin]]
+name = "center_of_mass"
+path = "codejam/2009/round_1c/center_of_mass/solution.rs"
+
+[[bin]]
+name = "a_digging_problem"
+path = "codejam/2009/round_2/a_digging_problem/solution.rs"
+
+[[bin]]
+name = "crazy_rows"
+path = "codejam/2009/round_2/crazy_rows/solution.rs"
+
+[[bin]]
+name = "stock_charts"
+path = "codejam/2009/round_2/stock_charts/solution.rs"
+
+[[bin]]
+name = "watering_plants"
+path = "codejam/2009/round_2/watering_plants/solution.rs"
+
+[[bin]]
+name = "alphabetomials"
+path = "codejam/2009/round_3/alphabetomials/solution.rs"
+
+[[bin]]
+name = "ez-sokoban"
+path = "codejam/2009/round_3/ez-sokoban/solution.rs"
+
+[[bin]]
+name = "football_team"
+path = "codejam/2009/round_3/football_team/solution.rs"
+
+[[bin]]
+name = "interesting_ranges"
+path = "codejam/2009/round_3/interesting_ranges/solution.rs"
+
+[[bin]]
+name = "doubly-sorted_grid"
+path = "codejam/2009/world_finals/doubly-sorted_grid/solution.rs"
+
+[[bin]]
+name = "lights"
+path = "codejam/2009/world_finals/lights/solution.rs"
+
+[[bin]]
+name = "marbles"
+path = "codejam/2009/world_finals/marbles/solution.rs"
+
+[[bin]]
+name = "min_perimeter"
+path = "codejam/2009/world_finals/min_perimeter/solution.rs"
+
+[[bin]]
+name = "wi-fi_towers"
+path = "codejam/2009/world_finals/wi-fi_towers/solution.rs"
+
+[[bin]]
+name = "year_of_more_code_jam"
+path = "codejam/2009/world_finals/year_of_more_code_jam/solution.rs"
