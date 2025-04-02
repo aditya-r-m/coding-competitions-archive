@@ -1,2 +1,0 @@
-Case #1: B
-Case #2: A
