@@ -1,2 +1,0 @@
-Case #1: forever
-Case #2: 3 day(s)
