@@ -1,3 +1,0 @@
-on_reject: continue
-range: 0 22
-grader_flags: ignore_sample
