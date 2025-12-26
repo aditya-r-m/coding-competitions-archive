@@ -1,3 +1,0 @@
-Case #1: 10
-Case #2: I don't know.
-Case #3: 6
